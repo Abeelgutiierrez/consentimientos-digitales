@@ -390,5 +390,93 @@
     "lanNote": "El móvil tiene que estar conectado a la misma Wi‑Fi que este ordenador. En producción, configura PUBLIC_URL.",
     "print": "Imprimir cartel",
     "test": "Probar enlace ↗"
+  },
+  "birthdays": {
+    "title": "Cumpleaños",
+    "sub": "Fideliza con un regalo automático",
+    "auto": "Felicitación automática",
+    "autoHint": "El día del cumpleaños se envía un correo con un código de descuento a quien haya aceptado recibir promociones al firmar el consentimiento.",
+    "enabled": "Activar felicitaciones automáticas",
+    "enabledHint": "Se revisa con la tarea programada (npm run jobs) o cada hora si el servidor la ejecuta.",
+    "discount": "Descuento (%)",
+    "validDays": "Validez del código (días)",
+    "subject": "Asunto",
+    "body": "Mensaje",
+    "vars": "Variables:",
+    "preview": "Vista previa del correo ↗",
+    "next60": "Próximos 60 días",
+    "sentThisYear": "{n, plural, one {# felicitación enviada este año} other {# felicitaciones enviadas este año}}.",
+    "acceptsPromos": "acepta promociones",
+    "noPromos": "no acepta promociones",
+    "simulate": "Simular",
+    "simulateNow": "Simular cumpleaños ahora",
+    "none": "Nadie cumple años en los próximos 60 días.",
+    "saved": "Configuración de cumpleaños guardada.",
+    "sent": "Felicitación enviada. La tienes en «Correos enviados».",
+    "willReceive": "Recibirá automáticamente su regalo ese día.",
+    "wontReceive": "No recibirá el regalo porque no aceptó las promociones.",
+    "errors": {
+      "noMarketing": "No ha aceptado recibir comunicaciones comerciales, así que no se le puede enviar (RGPD).",
+      "noEmail": "No tiene correo electrónico."
+    },
+    "ownerOnly": "Solo el dueño/a puede cambiar esta configuración."
+  },
+  "emails": {
+    "title": "Correos enviados",
+    "sub": "Felicitaciones de cumpleaños y promociones",
+    "simulatedNotice": "Modo demo: los correos se guardan aquí en lugar de enviarse. Configura RESEND_API_KEY y RESEND_FROM para enviarlos de verdad.",
+    "to": "Para",
+    "subject": "Asunto",
+    "code": "Código",
+    "date": "Fecha",
+    "status": "Estado",
+    "simulation": "simulación",
+    "empty": "Todavía no se ha enviado ningún correo.",
+    "mailTitle": "Correo de cumpleaños",
+    "validUntil": "válido hasta {date}",
+    "back": "← Volver",
+    "statuses": {
+      "simulado": "simulado",
+      "enviado": "enviado",
+      "error": "error"
+    },
+    "clientMails": "Correos enviados",
+    "noMails": "Ningún correo enviado todavía."
+  },
+  "settings": {
+    "title": "Ajustes del estudio",
+    "sub": "Personaliza el formulario, el PDF y los correos",
+    "data": "Datos del estudio",
+    "dataHint": "Aparecen en el formulario, en el PDF y en los correos.",
+    "name": "Nombre comercial",
+    "cif": "CIF / NIF",
+    "phone": "Teléfono",
+    "address": "Dirección",
+    "city": "Población",
+    "email": "Correo para ejercer derechos RGPD",
+    "services": "Servicios que ofrece",
+    "brand": "Imagen de marca",
+    "color": "Color principal",
+    "logo": "Logo (PNG o JPG, máx. 400 KB)",
+    "noLogo": "Sin logo",
+    "removeLogo": "Quitar logo",
+    "uploadLogo": "Subir logo",
+    "save": "Guardar cambios",
+    "note": "Los cambios se aplican a los consentimientos nuevos. Los ya firmados conservan lo que se firmó.",
+    "saved": "Ajustes guardados.",
+    "errors": {
+      "name": "Indica el nombre comercial.",
+      "email": "Correo no válido.",
+      "services": "Elige al menos un servicio.",
+      "logoSize": "El logo pesa más de 400 KB.",
+      "logoType": "El logo debe ser PNG o JPG."
+    }
+  },
+  "unsubscribe": {
+    "title": "Darte de baja de las promociones",
+    "lead": "Dejarás de recibir promociones y felicitaciones de cumpleaños de este estudio. Tu consentimiento informado no cambia.",
+    "confirm": "Confirmar la baja",
+    "done": "Listo: no recibirás más promociones de {studio}.",
+    "invalid": "Este enlace no es válido o ya se usó."
   }
 }

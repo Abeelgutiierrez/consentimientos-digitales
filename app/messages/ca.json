@@ -390,5 +390,93 @@
     "lanNote": "El mòbil ha d'estar connectat a la mateixa Wi‑Fi que aquest ordinador. En producció, configura PUBLIC_URL.",
     "print": "Imprimeix el cartell",
     "test": "Prova l'enllaç ↗"
+  },
+  "birthdays": {
+    "title": "Aniversaris",
+    "sub": "Fidelitza amb un regal automàtic",
+    "auto": "Felicitació automàtica",
+    "autoHint": "El dia de l'aniversari s'envia un correu amb un codi de descompte a qui hagi acceptat rebre promocions en signar el consentiment.",
+    "enabled": "Activa les felicitacions automàtiques",
+    "enabledHint": "Es revisa amb la tasca programada (npm run jobs) o cada hora si el servidor l'executa.",
+    "discount": "Descompte (%)",
+    "validDays": "Validesa del codi (dies)",
+    "subject": "Assumpte",
+    "body": "Missatge",
+    "vars": "Variables:",
+    "preview": "Previsualització del correu ↗",
+    "next60": "Propers 60 dies",
+    "sentThisYear": "{n, plural, one {# felicitació enviada aquest any} other {# felicitacions enviades aquest any}}.",
+    "acceptsPromos": "accepta promocions",
+    "noPromos": "no accepta promocions",
+    "simulate": "Simula",
+    "simulateNow": "Simula l'aniversari ara",
+    "none": "Ningú no fa anys en els propers 60 dies.",
+    "saved": "Configuració d'aniversaris desada.",
+    "sent": "Felicitació enviada. La tens a «Correus enviats».",
+    "willReceive": "Rebrà automàticament el regal aquell dia.",
+    "wontReceive": "No rebrà el regal perquè no va acceptar les promocions.",
+    "errors": {
+      "noMarketing": "No ha acceptat rebre comunicacions comercials, així que no se li pot enviar (RGPD).",
+      "noEmail": "No té correu electrònic."
+    },
+    "ownerOnly": "Només el propietari/ària pot canviar aquesta configuració."
+  },
+  "emails": {
+    "title": "Correus enviats",
+    "sub": "Felicitacions d'aniversari i promocions",
+    "simulatedNotice": "Mode demo: els correus es desen aquí en lloc d'enviar-se. Configura RESEND_API_KEY i RESEND_FROM per enviar-los de debò.",
+    "to": "Per a",
+    "subject": "Assumpte",
+    "code": "Codi",
+    "date": "Data",
+    "status": "Estat",
+    "simulation": "simulació",
+    "empty": "Encara no s'ha enviat cap correu.",
+    "mailTitle": "Correu d'aniversari",
+    "validUntil": "vàlid fins al {date}",
+    "back": "← Torna",
+    "statuses": {
+      "simulado": "simulat",
+      "enviado": "enviat",
+      "error": "error"
+    },
+    "clientMails": "Correus enviats",
+    "noMails": "Encara no s'ha enviat cap correu."
+  },
+  "settings": {
+    "title": "Configuració de l'estudi",
+    "sub": "Personalitza el formulari, el PDF i els correus",
+    "data": "Dades de l'estudi",
+    "dataHint": "Apareixen al formulari, al PDF i als correus.",
+    "name": "Nom comercial",
+    "cif": "CIF / NIF",
+    "phone": "Telèfon",
+    "address": "Adreça",
+    "city": "Població",
+    "email": "Correu per exercir drets RGPD",
+    "services": "Serveis que ofereix",
+    "brand": "Imatge de marca",
+    "color": "Color principal",
+    "logo": "Logotip (PNG o JPG, màx. 400 KB)",
+    "noLogo": "Sense logotip",
+    "removeLogo": "Treu el logotip",
+    "uploadLogo": "Puja el logotip",
+    "save": "Desa els canvis",
+    "note": "Els canvis s'apliquen als consentiments nous. Els ja signats conserven el que es va signar.",
+    "saved": "Configuració desada.",
+    "errors": {
+      "name": "Indica el nom comercial.",
+      "email": "Correu no vàlid.",
+      "services": "Tria almenys un servei.",
+      "logoSize": "El logotip pesa més de 400 KB.",
+      "logoType": "El logotip ha de ser PNG o JPG."
+    }
+  },
+  "unsubscribe": {
+    "title": "Donar-te de baixa de les promocions",
+    "lead": "Deixaràs de rebre promocions i felicitacions d'aniversari d'aquest estudi. El teu consentiment informat no canvia.",
+    "confirm": "Confirma la baixa",
+    "done": "Fet: no rebràs més promocions de {studio}.",
+    "invalid": "Aquest enllaç no és vàlid o ja s'ha fet servir."
   }
 }
