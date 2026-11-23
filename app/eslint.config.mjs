@@ -7,6 +7,8 @@ const eslintConfig = defineConfig([
   ...nextTs,
   {
     rules: {
+      // Los logos son imágenes pequeñas servidas por la propia app (no hace falta next/image).
+      "@next/next/no-img-element": "off",
       "@typescript-eslint/no-unused-vars": ["warn", { argsIgnorePattern: "^_", varsIgnorePattern: "^_", destructuredArrayIgnorePattern: "^_" }],
     },
   },

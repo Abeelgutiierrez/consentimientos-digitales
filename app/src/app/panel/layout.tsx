@@ -1,0 +1,62 @@
+import type { CSSProperties } from "react";
+import { getTranslations } from "next-intl/server";
+import { accentStyle } from "@/core/color";
+import { LocaleSwitch } from "@/components/locale-switch";
+import { requireUser, withUser } from "@/server/auth";
+import { getStudio } from "@/server/studios";
+import { logoutAction } from "./actions";
+import { type NavItem, PanelNav } from "./nav";
+
+// Marco del panel. Ojo: la autorización NO depende de este layout (no se re-renderiza al navegar);
+// cada página y acción vuelve a comprobar la sesión con requireUser()/withUser().
+export default async function PanelLayout({ children }: LayoutProps<"/panel">) {
+  const user = await requireUser();
+  const studio = await withUser((scope) => getStudio(scope));
+  const t = await getTranslations("nav");
+  const items: NavItem[] = [
+    { href: "/panel", label: t("dashboard"), icon: "home" },
+    { href: "/panel/consentimientos", label: t("consents"), icon: "doc" },
+    { href: "/panel/clientes", label: t("clients"), icon: "users" },
+    { href: "/panel/qr", label: t("qr"), icon: "qr" },
+    { href: "/panel/cumpleanos", label: t("birthdays"), icon: "gift" },
+    { href: "/panel/correos", label: t("emails"), icon: "mail" },
+    ...(user.role === "owner"
+      ? ([
+          { href: "/panel/ajustes", label: t("settings"), icon: "cog" },
+          { href: "/panel/equipo", label: t("team"), icon: "team" },
+          { href: "/panel/auditoria", label: t("audit"), icon: "shield" },
+        ] satisfies NavItem[])
+      : []),
+  ];
+  const initials = studio.name.split(/\s+/).map((w) => w[0]).join("").slice(0, 2).toUpperCase();
+  return (
+    <div className="panel" style={accentStyle(studio.color) as CSSProperties}>
+      <aside className="side">
+        <div className="brand">
+          <div className="dot">
+            {studio.logo ? <img src={`/s/${studio.slug}/logo`} alt="" /> : initials}
+          </div>
+          <div>
+            <b>{studio.name}</b>
+            <small>{t("panel")}</small>
+          </div>
+        </div>
+        <PanelNav items={items} />
+        <div className="bottom">
+          <p><a href={`/s/${studio.slug}`} target="_blank" rel="noopener">{t("openForm")}</a></p>
+          <div className="user">
+            <b>{user.name}</b>
+            <small>{t(`roles.${user.role}`)} · <a href="/panel/cuenta">{t("account")}</a></small>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: 8 }}>
+              <form action={logoutAction}>
+                <button className="btn ghost small" style={{ color: "#c9c8d3", borderColor: "#33333f" }}>{t("logout")}</button>
+              </form>
+              <LocaleSwitch dark />
+            </div>
+          </div>
+        </div>
+      </aside>
+      <main className="main">{children}</main>
+    </div>
+  );
+}

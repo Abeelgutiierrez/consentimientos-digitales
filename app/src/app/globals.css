@@ -264,3 +264,38 @@
   @media (max-width: 860px) { .panel { background: var(--bg); } }
   .ink-table { min-width: 680px; }
 }
+
+/* ---------- v2: componentes nuevos ---------- */
+@layer components {
+  .locale-switch { display: inline-flex; gap: 2px; }
+  .locale-switch button { background: none; border: 0; padding: 2px 6px; font: 700 .75rem var(--font); letter-spacing: .06em; color: var(--muted); cursor: pointer; border-radius: 6px; }
+  .locale-switch button.on { color: var(--ink); background: var(--soft); }
+  .side .user { padding: 10px 8px 0; border-top: 1px solid #2b2b37; margin-top: 10px; }
+  .side .user b { display: block; color: #e9e8ee; font-size: .85rem; }
+  .side .user small { color: #9b9aa8; }
+  .inline-form { display: inline; }
+  .table-actions { display: flex; gap: 6px; flex-wrap: wrap; justify-content: flex-end; }
+  .table-actions input { max-width: 160px; padding: .4em .6em; font-size: .85rem; }
+}
+
+/* En móvil la demo ocultaba el pie de la barra lateral: sin él no se puede cerrar sesión
+   ni cambiar de idioma. Lo mostramos compacto bajo la navegación. */
+@layer components {
+  @media (max-width: 860px) {
+    .side .bottom { display: block; width: 100%; margin: 4px 0 0; padding: 0; }
+    .side .bottom > p { display: none; }
+    .side .user { border-top: 0; margin-top: 0; padding: 6px 8px 0; display: flex; flex-wrap: wrap; align-items: center; gap: 4px 12px; }
+    .side .user > div { margin-top: 0 !important; gap: 12px; }
+  }
+}
+
+/* Columnas que pueden encogerse (evita desbordes horizontales con tablas o formularios anchos). */
+@layer components {
+  .cols > *, .main { min-width: 0; }
+  .side .locale-switch button.on { background: #2b2b37; color: #fff; }
+  .rows > .row-item { display: flex; flex-wrap: wrap; gap: 10px 16px; align-items: center; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid var(--line); }
+  .rows > .row-item:last-child { border-bottom: 0; }
+  .rows .meta { font-size: .85rem; color: var(--muted); }
+  .rows .table-actions { justify-content: flex-start; }
+  .rows .table-actions input { width: 170px; max-width: 100%; }
+}
