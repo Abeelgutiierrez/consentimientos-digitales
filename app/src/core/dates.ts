@@ -95,3 +95,13 @@ export function addDays(isoDate: string, days: number): string {
   const d = new Date(Date.UTC(b.y, b.m - 1, b.d + days));
   return `${d.getUTCFullYear()}-${pad(d.getUTCMonth() + 1)}-${pad(d.getUTCDate())}`;
 }
+
+/** Suma años a una fecha AAAA-MM-DD (el 29 de febrero pasa al 28 en años no bisiestos), como make_interval de Postgres. */
+export function addYears(isoDate: string, years: number): string {
+  const b = parseIsoDate(isoDate);
+  if (!b) throw new Error("Fecha no válida");
+  const y = b.y + years;
+  const leap = (y % 4 === 0 && y % 100 !== 0) || y % 400 === 0;
+  const day = b.m === 2 && b.d === 29 && !leap ? 28 : b.d;
+  return `${y}-${pad(b.m)}-${pad(day)}`;
+}

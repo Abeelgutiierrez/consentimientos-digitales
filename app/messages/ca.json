@@ -478,5 +478,58 @@
     "confirm": "Confirma la baixa",
     "done": "Fet: no rebràs més promocions de {studio}.",
     "invalid": "Aquest enllaç no és vàlid o ja s'ha fet servir."
+  },
+  "retention": {
+    "title": "Conservació de les dades",
+    "hint": "Termini durant el qual es guarden els consentiments des de la data de signatura. Quan venç, el sistema NO esborra res sol: t'ho mostra aquí perquè ho revisis i ho confirmis.",
+    "pending": "Pendent de definir (no es purga res)",
+    "years": "{n, plural, one {# any} other {# anys}}",
+    "yearsLabel": "Termini",
+    "note": "Nota (base legal, qui ho va decidir…)",
+    "legalWarning": "Consulta el termini amb el vostre assessor: depèn de la normativa sanitària i de protecció de dades aplicable.",
+    "save": "Desa el termini",
+    "saved": "Termini de conservació desat. S'han recalculat les dates de tots els consentiments.",
+    "dueTitle": "Consentiments amb el termini vençut",
+    "dueHint": "En confirmar s'eliminen definitivament, amb els PDF i els annexos. Els clients que es quedin sense consentiments també s'eliminen, amb els correus. A l'auditoria en queda constància (sense dades personals).",
+    "dueNone": "No hi ha cap consentiment amb el termini vençut.",
+    "client": "Client",
+    "signed": "Signat",
+    "until": "Conservar fins a",
+    "confirm": "Entenc que s'eliminaran definitivament i que no es poden recuperar",
+    "purge": "Elimina els seleccionats",
+    "purged": "S'han eliminat {consents} consentiments i {clients} clients.",
+    "errors": {
+      "years": "El termini ha de ser d'entre 1 i 30 anys.",
+      "confirm": "Marca la casella de confirmació per eliminar."
+    }
+  },
+  "export": {
+    "button": "Exporta les seves dades (ZIP)",
+    "hint": "Dret d'accés: fitxa, consentiments, annexos, promocions, correus i PDF. Queda registrat a l'auditoria."
+  },
+  "auditPage": {
+    "title": "Auditoria",
+    "sub": "Qui ha vist, descarregat o canviat què i quan",
+    "filterAction": "Acció",
+    "filterUser": "Usuari",
+    "all": "Totes",
+    "allUsers": "Tots",
+    "filter": "Filtra",
+    "when": "Quan",
+    "who": "Qui",
+    "what": "Què",
+    "on": "Sobre",
+    "from": "Des de",
+    "empty": "No hi ha registres amb aquest filtre.",
+    "newer": "← Més recents",
+    "older": "Més antics →",
+    "groups": {
+      "consent": "Consentiments",
+      "client": "Clients",
+      "email": "Correus",
+      "studio": "Configuració",
+      "user": "Usuaris i accessos"
+    },
+    "deleted": "eliminat"
   }
 }

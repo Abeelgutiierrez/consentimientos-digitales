@@ -478,5 +478,58 @@
     "confirm": "Confirmar la baja",
     "done": "Listo: no recibirás más promociones de {studio}.",
     "invalid": "Este enlace no es válido o ya se usó."
+  },
+  "retention": {
+    "title": "Conservación de los datos",
+    "hint": "Plazo durante el que se guardan los consentimientos desde la fecha de firma. Al vencer, el sistema NO borra nada solo: te lo muestra aquí para que lo revises y confirmes.",
+    "pending": "Pendiente de definir (no se purga nada)",
+    "years": "{n, plural, one {# año} other {# años}}",
+    "yearsLabel": "Plazo",
+    "note": "Nota (base legal, quién lo decidió…)",
+    "legalWarning": "Consulta el plazo con vuestro asesor: depende de la normativa sanitaria y de protección de datos aplicable.",
+    "save": "Guardar plazo",
+    "saved": "Plazo de conservación guardado. Se han recalculado las fechas de todos los consentimientos.",
+    "dueTitle": "Consentimientos con el plazo vencido",
+    "dueHint": "Al confirmar se eliminan definitivamente, con sus PDFs y anexos. Los clientes que se queden sin consentimientos se eliminan también, con sus correos. En la auditoría queda constancia (sin datos personales).",
+    "dueNone": "No hay ningún consentimiento con el plazo vencido.",
+    "client": "Cliente",
+    "signed": "Firmado",
+    "until": "Conservar hasta",
+    "confirm": "Entiendo que se eliminarán definitivamente y no se pueden recuperar",
+    "purge": "Eliminar los seleccionados",
+    "purged": "Eliminados {consents} consentimientos y {clients} clientes.",
+    "errors": {
+      "years": "El plazo debe estar entre 1 y 30 años.",
+      "confirm": "Marca la casilla de confirmación para eliminar."
+    }
+  },
+  "export": {
+    "button": "Exportar sus datos (ZIP)",
+    "hint": "Derecho de acceso: ficha, consentimientos, anexos, promociones, correos y PDFs. Queda registrado en la auditoría."
+  },
+  "auditPage": {
+    "title": "Auditoría",
+    "sub": "Quién ha visto, descargado o cambiado qué y cuándo",
+    "filterAction": "Acción",
+    "filterUser": "Usuario",
+    "all": "Todas",
+    "allUsers": "Todos",
+    "filter": "Filtrar",
+    "when": "Cuándo",
+    "who": "Quién",
+    "what": "Qué",
+    "on": "Sobre",
+    "from": "Desde",
+    "empty": "No hay registros con ese filtro.",
+    "newer": "← Más recientes",
+    "older": "Más antiguos →",
+    "groups": {
+      "consent": "Consentimientos",
+      "client": "Clientes",
+      "email": "Correos",
+      "studio": "Ajustes",
+      "user": "Usuarios y accesos"
+    },
+    "deleted": "eliminado"
   }
 }

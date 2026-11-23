@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { getTranslations } from "next-intl/server";
 import { SERVICES, SERVICE_KEYS } from "@/core/content";
 import { Flash } from "@/components/flash";
@@ -13,12 +14,13 @@ export const metadata: Metadata = { title: "Ajustes del estudio" };
 export default async function SettingsPage({ searchParams }: PageProps<"/panel/ajustes">) {
   const studio = await withUser((scope) => getStudio(scope), { ownerOnly: true });
   const t = await getTranslations("settings");
+  const tr = await getTranslations("retention");
   const sp = await searchParams;
   const errorKeys = ["name", "email", "services", "logoSize", "logoType"];
   const error = typeof sp.error === "string" && errorKeys.includes(sp.error) ? sp.error : null;
   return (
     <>
-      <Topbar title={t("title")} sub={t("sub")} />
+      <Topbar title={t("title")} sub={t("sub")} actions={<Link className="btn ghost" href="/panel/ajustes/conservacion">{tr("title")} →</Link>} />
       {error && <div className="notice bad" role="alert">{t(`errors.${error}` as never)}</div>}
       <form className="cols" action={saveSettingsAction}>
         <div className="card">

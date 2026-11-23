@@ -27,6 +27,7 @@ export default async function ClientPage({ params, searchParams }: PageProps<"/p
   const t = await getTranslations("client");
   const tb = await getTranslations("birthdays");
   const te = await getTranslations("emails");
+  const tx = await getTranslations("export");
   const sp = await searchParams;
   const days = daysToBirthday(c.birthDate);
   return (
@@ -67,6 +68,13 @@ export default async function ClientPage({ params, searchParams }: PageProps<"/p
             {(sp.error === "noMarketing" || sp.error === "noEmail") && <div className="notice bad" role="alert">{tb(`errors.${sp.error}`)}</div>}
             {isOwner && <form action={simulateBirthdayAction.bind(null, c.id, "cliente")}><button className="btn block">{tb("simulateNow")}</button></form>}
           </div>
+          {isOwner && (
+            <div className="card">
+              <h2>{tx("button")}</h2>
+              <p className="muted" style={{ fontSize: ".85rem" }}>{tx("hint")}</p>
+              <a className="btn ghost block" href={`/panel/clientes/${c.id}/exportar`}>{tx("button")}</a>
+            </div>
+          )}
         </div>
       </div>
     </>

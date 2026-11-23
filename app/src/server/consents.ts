@@ -3,7 +3,7 @@ import { and, desc, eq, sql } from "drizzle-orm";
 import { clients, consentAnnexes, consentPdfs, consents, type InkRow } from "@/db/schema";
 import { sha256Hex } from "@/core/canonical";
 import { legalLocaleFor } from "@/core/content";
-import { addDays, isoDateInMadrid } from "@/core/dates";
+import { addYears, isoDateInMadrid } from "@/core/dates";
 import { type SignedPayload, buildSignedPayload, verifySignHash } from "@/core/evidence";
 import { type ValidationErrors, validateSubmission } from "@/core/validation";
 import { audit } from "./audit";
@@ -72,7 +72,7 @@ export async function createConsent(
     flagsEnc: encryptJson({ healthYes: Object.values(s.health).filter(Boolean).length } satisfies ConsentFlags, flagsCtx(ids)),
     publicTokenHash: tokenHash(publicToken),
     publicTokenExpiresAt: new Date(now.getTime() + PUBLIC_LINK_DAYS * 86_400_000),
-    purgeAfter: studio.retentionYears ? addDays(isoDateInMadrid(now), Math.round(studio.retentionYears * 365.25)) : null,
+    purgeAfter: studio.retentionYears ? addYears(isoDateInMadrid(now), studio.retentionYears) : null,
     createdAt: now,
   });
   await audit(scope, "consent.signed", { type: "consent", id: consentId }, { version: payload.consentVersion });

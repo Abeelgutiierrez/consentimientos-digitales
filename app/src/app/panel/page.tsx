@@ -6,17 +6,23 @@ import { Topbar } from "@/components/topbar";
 import { withUser } from "@/server/auth";
 import { dashboardData } from "@/server/panel";
 import { getStudio } from "@/server/studios";
+import { purgeCandidates } from "@/server/gdpr";
 
 export default async function DashboardPage({ searchParams }: PageProps<"/panel">) {
-  const { studio, data } = await withUser(async (scope) => ({ studio: await getStudio(scope), data: await dashboardData(scope) }));
+  const { studio, data, due } = await withUser(async (scope, user) => ({
+    studio: await getStudio(scope), data: await dashboardData(scope),
+    due: user.role === "owner" ? (await purgeCandidates(scope)).length : 0,
+  }));
   const t = await getTranslations("dashboard");
   const tc = await getTranslations("common");
+  const tr = await getTranslations("retention");
   const { prohibido } = await searchParams;
   const s = data.stats;
   return (
     <>
       {prohibido && <div className="notice warn" role="alert">{tc("forbidden")}</div>}
       <Topbar title={t("hello", { name: studio.name })} sub={t("sub")} />
+      {due > 0 && <div className="notice warn"><Link href="/panel/ajustes/conservacion">{tr("dueTitle")}: {due}</Link></div>}
       <div className="stats">
         <div className="stat"><div className="k">{t("today")}</div><div className="v">{s.today}</div><div className="s">{t("lastWeek", { n: s.week })}</div></div>
         <div className="stat"><div className="k">{t("month")}</div><div className="v">{s.month}</div><div className="s">{t("total", { n: s.total })}</div></div>
