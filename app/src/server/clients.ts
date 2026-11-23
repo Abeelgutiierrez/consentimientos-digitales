@@ -2,6 +2,7 @@ import "server-only";
 import { and, asc, eq, or, sql } from "drizzle-orm";
 import { clients, marketingEvents } from "@/db/schema";
 import type { PersonData } from "@/core/validation";
+import { likePattern } from "@/core/text";
 import { blindIndex, decryptString, encryptString } from "./crypto";
 import { NotFoundError, newId, type Scope } from "./tenant";
 
@@ -74,10 +75,10 @@ export async function listClients(scope: Scope, q = "") {
   const term = q.trim();
   const filters = [eq(clients.studioId, scope.studioId)];
   if (term) {
-    const like = `%${term.toLowerCase()}%`;
+    const like = likePattern(term);
     filters.push(or(
-      sql`lower(${clients.firstName} || ' ' || ${clients.lastName}) like ${like}`,
-      sql`lower(${clients.email}) like ${like}`,
+      sql`norm_txt(${clients.firstName} || ' ' || ${clients.lastName}) like ${like}`,
+      sql`norm_txt(${clients.email}) like ${like}`,
       sql`regexp_replace(${clients.phone}, '\\D', '', 'g') like ${"%" + term.replace(/\D/g, "") + "%"} and ${term.replace(/\D/g, "").length >= 3}`,
       eq(clients.dniHash, dniIndex(scope.studioId, term)),
     )!);

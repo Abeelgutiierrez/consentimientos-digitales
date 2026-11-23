@@ -7,7 +7,8 @@ import { addDays, isoDateInMadrid } from "@/core/dates";
 import { type SignedPayload, buildSignedPayload, verifySignHash } from "@/core/evidence";
 import { type ValidationErrors, validateSubmission } from "@/core/validation";
 import { audit } from "./audit";
-import { upsertClientFromConsent } from "./clients";
+import { dniIndex, upsertClientFromConsent } from "./clients";
+import { likePattern } from "@/core/text";
 import { decryptBytes, decryptJson, decryptString, encryptBytes, encryptJson, encryptString, newToken, tokenHash } from "./crypto";
 import { type AnnexData, buildConsentPdf } from "./pdf";
 import { getStudio, listArtists, studioBranding, studioSnapshot } from "./studios";
@@ -219,12 +220,13 @@ export interface ConsentListItem {
 export async function listConsents(scope: Scope, opts: { q?: string; clientId?: string; limit?: number } = {}): Promise<ConsentListItem[]> {
   const filters = [eq(consents.studioId, scope.studioId)];
   if (opts.clientId) filters.push(eq(consents.clientId, opts.clientId));
-  const q = (opts.q ?? "").trim().toLowerCase();
+  const q = (opts.q ?? "").trim();
   if (q) {
-    const like = `%${q}%`;
-    filters.push(sql`(lower(${clients.firstName} || ' ' || ${clients.lastName}) like ${like}
-      or lower(${clients.email}) like ${like} or lower(${consents.zone}) like ${like}
-      or lower(${consents.artistName}) like ${like} or lower(${consents.service}) like ${like})`);
+    const like = likePattern(q);
+    filters.push(sql`(norm_txt(${clients.firstName} || ' ' || ${clients.lastName}) like ${like}
+      or norm_txt(${clients.email}) like ${like} or norm_txt(${consents.zone}) like ${like}
+      or norm_txt(${consents.artistName}) like ${like} or norm_txt(${consents.service}) like ${like}
+      or ${clients.dniHash} = ${dniIndex(scope.studioId, q)})`);
   }
   const rows = await scope.tx.select({
     id: consents.id, studioId: consents.studioId, clientId: consents.clientId, firstName: clients.firstName, lastName: clients.lastName,

@@ -13,12 +13,14 @@ describe("traducciones", () => {
   });
 
   it("no hay textos vacíos", () => {
+    const leaves = (o: unknown): unknown[] => (o && typeof o === "object" ? Object.values(o).flatMap(leaves) : [o]);
     for (const messages of [es, ca]) {
-      const empty = keys(messages).filter((k) => {
-        const v = k.split(".").reduce<unknown>((o, p) => (o as Record<string, unknown>)[p], messages);
-        return typeof v !== "string" || !v.trim();
-      });
-      expect(empty).toEqual([]);
+      expect(leaves(messages).filter((v) => typeof v !== "string" || !v.trim())).toEqual([]);
     }
+  });
+
+  it("ninguna clave contiene puntos (next-intl los usa como separador)", () => {
+    const bad = (o: unknown): string[] => (o && typeof o === "object" ? Object.entries(o).flatMap(([k, v]) => [...(k.includes(".") ? [k] : []), ...bad(v)]) : []);
+    expect(bad(es)).toEqual([]);
   });
 });
