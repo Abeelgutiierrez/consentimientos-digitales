@@ -6,7 +6,9 @@
   "home": {
     "title": "Consentiments digitals per a estudis i centres d'estètica",
     "lead": "El client escaneja un QR, omple les seves dades des del mòbil i signa amb el dit. L'estudi rep el PDF signat a l'instant.",
-    "panel": "Panell de l'estudi"
+    "panel": "Panell de l'estudi",
+    "clientForm": "Formulari del client",
+    "demoNotice": "Entorn de proves: estudis i clients ficticis. Usuaris de demo amb la contrasenya demo1234 (p. ex. marc@agujafina.example)."
   },
   "common": {
     "save": "Desa",
@@ -197,7 +199,8 @@
     "signNotice": "En prémer «Signa i envia» es generarà el teu consentiment en PDF amb la data, l'hora i una empremta digital que garanteix que no es pot modificar.",
     "offline": "Sense connexió amb l'estudi. Comprova la Wi‑Fi i torna-ho a provar.",
     "sendError": "No s'ha pogut enviar. Torna-ho a provar.",
-    "footer": "Les teves dades es tracten de manera confidencial."
+    "footer": "Les teves dades es tracten de manera confidencial.",
+    "rateLimited": "Massa enviaments seguits des d'aquesta connexió. Espera uns minuts."
   },
   "validation": {
     "firstName": "Indica el teu nom",

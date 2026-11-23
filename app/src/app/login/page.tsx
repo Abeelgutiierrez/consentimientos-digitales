@@ -20,10 +20,10 @@ export default async function LoginPage({ searchParams }: PageProps<"/login">) {
         {cambio && <div className="notice ok" role="status">{ta("passwordChanged")}</div>}
         <LoginForm />
         {demo && <div className="demo-hint">{t("demoHint", { email: "marc@agujafina.example", password: "demo1234" })}</div>}
-        <p style={{ margin: "14px 0 0", textAlign: "center", display: "flex", justifyContent: "center", gap: 14, alignItems: "center" }}>
+        <div style={{ margin: "14px 0 0", textAlign: "center", display: "flex", justifyContent: "center", gap: 14, alignItems: "center" }}>
           <Link className="muted" href="/">{t("backHome")}</Link>
           <LocaleSwitch />
-        </p>
+        </div>
       </div>
     </main>
   );

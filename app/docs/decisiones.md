@@ -57,3 +57,13 @@ comprueba que todos los caracteres de los textos legales tienen glifo. Ver `asse
 Además de la huella, se guarda (cifrado) el JSON canónico exacto que se firmó. Así «Verificar
 integridad» comprueba dos cosas: que lo firmado sigue dando la huella registrada y que el PDF vigente
 coincide con su hash. En la demo solo se podía comprobar el PDF.
+
+## 2026-11-23 · Cierre del piloto
+- **Errores sin datos personales**: Drizzle incluye los valores de los parámetros en los errores de consulta
+  y Next los imprime. `src/lib/redact-errors.ts` (instalado en `instrumentation.ts`) los oculta antes de escribir.
+- **Límite de envíos del formulario**: 30 cada 10 minutos por conexión, en memoria (un solo servidor).
+- **Baja de promociones**: enlace en cada correo y cabecera `List-Unsubscribe`; se confirma con un botón para
+  que los antivirus que abren enlaces no den de baja a nadie. Token estable por cliente (HMAC).
+- **Purga por conservación**: nunca automática; el dueño/a revisa y confirma. Borra también los correos del
+  cliente eliminado (migración 0003 concede DELETE en `emails`).
+- **Comprobar una copia en PDF**: la huella se calcula en el navegador; el PDF no se sube al servidor.

@@ -27,6 +27,19 @@ de marketing).
 - `lib/email.js` cumpleaños (bandeja simulada o Resend si hay `RESEND_API_KEY`).
 - `lib/views/*` HTML renderizado en servidor; `public/` CSS y JS del navegador.
 
+## Versión 2 (piloto): carpeta `app/`
+- Next.js 16 (App Router, `cacheComponents: false`) + TypeScript estricto + Tailwind 4 + Drizzle + Postgres (Docker, puerto 5433).
+  Leer `app/README.md` (arranque y variables) y `app/docs/decisiones.md` (por qué) antes de tocarla.
+- `app/AGENTS.md`: esta versión de Next tiene cambios; consultar `app/node_modules/next/dist/docs/` antes de usar APIs.
+- Toda consulta de datos de un estudio pasa por `withStudio()` / `withUser()` (RLS + filtro explícito). Nunca usar
+  `db` directamente para datos de estudios. Lo previo al estudio va por funciones `SECURITY DEFINER` (`drizzle/0001_rls.sql`).
+- Evidencias: `src/core/evidence.ts` (payload firmado v2, se guarda entero y cifrado). Mismo `canonicalJson` que la demo
+  (test `tests/unit/compat-demo.test.ts`). El rol de la app no puede modificar columnas de evidencia ni la auditoría.
+- Cifrado: `src/server/crypto.ts` (AAD = tabla|campo|estudio|fila). Textos de la interfaz en `app/messages/{es,ca}.json`
+  (claves sin puntos; mismas claves en ambos idiomas). Textos legales en `src/core/content.ts` (solo castellano hasta revisión).
+- Verificar: `npm run check` (Vitest, necesita Docker) y `npm run test:e2e` (Playwright móvil, flujo completo).
+- La demo de la raíz no se toca: se sigue usando para enseñarla a clientes.
+
 ## Reglas del proyecto
 - Interfaz, textos y comentarios **en español** (más adelante, versión en catalán).
 - Datos de salud = categoría especial RGPD: minimizar, no registrarlos en logs, nunca en URLs.

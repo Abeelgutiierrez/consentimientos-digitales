@@ -9,6 +9,10 @@ const securityHeaders = [
   { key: "Referrer-Policy", value: "same-origin" },
   { key: "X-Frame-Options", value: "SAMEORIGIN" },
   { key: "Permissions-Policy", value: "camera=(), microphone=(), geolocation=()" },
+  // En producción (siempre detrás de HTTPS) obliga al navegador a usar HTTPS.
+  ...(process.env.NODE_ENV === "production" && process.env.E2E !== "1"
+    ? [{ key: "Strict-Transport-Security", value: "max-age=31536000; includeSubDomains" }]
+    : []),
 ];
 
 const nextConfig: NextConfig = {

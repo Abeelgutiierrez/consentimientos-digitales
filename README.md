@@ -8,6 +8,23 @@ recibe al momento el PDF firmado en su panel.
 > pasar a la Fase 2 (base de datos cifrada, contrato de encargado del tratamiento, revisión legal
 > de los textos, copias de seguridad…).
 
+## Versión 2 (piloto) → carpeta `app/`
+
+La v2 (Next.js + Postgres, cifrado, varios usuarios por estudio, auditoría, conservación y exportación
+de datos) está en [`app/`](app/README.md). Arranque rápido:
+
+```powershell
+cd app
+npm install
+npm run setup:env      # solo la primera vez: crea .env.local con claves aleatorias
+docker compose up -d   # Postgres (Docker Desktop abierto)
+npm run db:reset       # solo la primera vez: tablas + datos ficticios
+npm run dev            # http://localhost:3000  ·  panel: marc@agujafina.example / demo1234
+```
+
+Variables de entorno, comandos y checklist de producción: [`app/README.md`](app/README.md).
+Esta demo (Fase 1) sigue funcionando igual con `node server.js`, sin tocar nada de la v2.
+
 ---
 
 ## Arrancar en 1 minuto

@@ -3,10 +3,13 @@ import { loginAs, notice } from "./helpers";
 
 
 test("contraseña incorrecta: mensaje genérico y sin acceso", async ({ page }) => {
+  const errors: string[] = [];
+  page.on("console", (m) => { if (m.type() === "error") errors.push(m.text()); });
   await loginAs(page, "marc@agujafina.example", "incorrecta", { expectOk: false });
   await expect(notice(page)).toHaveText("Correo o contraseña incorrectos.");
   await page.goto("/panel");
   await expect(page).toHaveURL(/\/login$/);
+  expect(errors).toEqual([]);
 });
 
 test("el dueño entra, ve el equipo y cierra sesión", async ({ page }) => {

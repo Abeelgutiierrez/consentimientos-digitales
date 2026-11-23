@@ -155,7 +155,7 @@ export function ConsentForm({ config }: { config: FormConfig }) {
         if (target !== step) show(target);
         focusFirstError();
       } else {
-        setSubmitError(t("sendError"));
+        setSubmitError(res.status === 429 ? t("rateLimited") : t("sendError"));
       }
     } catch {
       setSubmitError(t("offline"));

@@ -6,7 +6,9 @@
   "home": {
     "title": "Consentimientos digitales para estudios y centros de estética",
     "lead": "El cliente escanea un QR, rellena sus datos desde su móvil y firma con el dedo. El estudio recibe el PDF firmado al instante.",
-    "panel": "Panel del estudio"
+    "panel": "Panel del estudio",
+    "clientForm": "Formulario del cliente",
+    "demoNotice": "Entorno de pruebas: estudios y clientes ficticios. Usuarios de demo con la contraseña demo1234 (p. ej. marc@agujafina.example)."
   },
   "common": {
     "save": "Guardar",
@@ -197,7 +199,8 @@
     "signNotice": "Al pulsar «Firmar y enviar» se generará tu consentimiento en PDF con la fecha, la hora y una huella digital que garantiza que no se puede modificar.",
     "offline": "Sin conexión con el estudio. Comprueba la Wi‑Fi e inténtalo de nuevo.",
     "sendError": "No se ha podido enviar. Inténtalo de nuevo.",
-    "footer": "Tus datos se tratan de forma confidencial."
+    "footer": "Tus datos se tratan de forma confidencial.",
+    "rateLimited": "Demasiados envíos seguidos desde esta conexión. Espera unos minutos."
   },
   "validation": {
     "firstName": "Indica tu nombre",

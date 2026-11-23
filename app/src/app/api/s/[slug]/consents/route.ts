@@ -1,5 +1,6 @@
 import { getLocale } from "next-intl/server";
 import { createConsent } from "@/server/consents";
+import { allow } from "@/server/rate-limit";
 import { requestMeta } from "@/server/request";
 import { studioIdBySlug } from "@/server/studios";
 import { withStudio } from "@/server/tenant";
@@ -26,10 +27,15 @@ export async function POST(req: Request, ctx: RouteContext<"/api/s/[slug]/consen
     return json({ error: "json" }, 400);
   }
 
+  // Máximo 30 envíos cada 10 minutos por conexión (evita spam; un estudio con wifi compartida firma
+  // muchos menos). Los envíos con errores de validación también cuentan.
+  const meta = await requestMeta();
+  if (!allow(`firma|${meta.ip}`, 30, 10 * 60_000)) return json({ error: "limite" }, 429);
+
   const studioId = await studioIdBySlug(slug);
   if (!studioId) return json({ error: "estudio" }, 404);
   const locale = await getLocale();
-  const result = await withStudio(studioId, { type: "client" }, (scope) => createConsent(scope, body, { locale }), await requestMeta());
+  const result = await withStudio(studioId, { type: "client" }, (scope) => createConsent(scope, body, { locale }), meta);
   if ("errors" in result) return json({ errors: result.errors }, 422);
 
   logger.info({ event: "consent_signed", studioId, consentId: result.consentId }, "Consentimiento firmado");
