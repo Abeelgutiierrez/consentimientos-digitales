@@ -36,3 +36,24 @@ solo de desarrollo que no levanta servidor; riesgo aceptado.
 - Artistas: ven todos los consentimientos del estudio (los necesitan para trabajar con seguridad), pero no
   exportan, no purgan, no cambian ajustes ni ven la auditoría.
 - Enlace público del PDF para el cliente: caduca a los 30 días.
+
+## 2026-11-23 · Fuente del PDF: Inter recortada a latín
+El *subsetting* de pdf-lib (`subset: true`) generaba PDFs con la mayoría de glifos vacíos (comprobado
+renderizando el PDF; los tests de «PDF válido» pasaban igualmente). Se incrusta la fuente entera, ya
+recortada con fonttools a latín + latín extendido (64 KB por peso; PDF ≈ 100 KB). Hay un test que
+comprueba que todos los caracteres de los textos legales tienen glifo. Ver `assets/fonts/LEEME.md`.
+
+## 2026-11-23 · Multi-tenant: RLS + filtro explícito + permisos de columna
+- Toda consulta de datos de un estudio va por `withStudio()` (transacción con `app.studio_id`) y además
+  filtra por `studio_id` en el propio código.
+- La app se conecta con `consent_app` (sin superusuario ni BYPASSRLS). Las migraciones y el seed de
+  estudios/usuarios usan el rol propietario.
+- Permisos de columna: el rol de la app no puede modificar las evidencias de un consentimiento, ni el
+  historial de PDFs/anexos, ni la auditoría. Lo comprueban los tests de `tests/db/`.
+- Lo que ocurre antes de conocer el estudio (login, sesiones, slug público, enlace del PDF del cliente,
+  baja de marketing, tareas programadas) usa funciones `SECURITY DEFINER` que devuelven lo mínimo.
+
+## 2026-11-23 · Lo firmado se guarda entero
+Además de la huella, se guarda (cifrado) el JSON canónico exacto que se firmó. Así «Verificar
+integridad» comprueba dos cosas: que lo firmado sigue dando la huella registrada y que el PDF vigente
+coincide con su hash. En la demo solo se podía comprobar el PDF.

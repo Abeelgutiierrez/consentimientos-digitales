@@ -11,9 +11,12 @@
     "typecheck": "next typegen && tsc --noEmit",
     "test": "vitest run",
     "test:watch": "vitest",
-    "e2e:prepare": "echo sin preparacion todavia",
+    "e2e:prepare": "tsx --env-file-if-exists=.env.local --conditions=react-server scripts/e2e-prepare.ts",
     "test:e2e": "next build && playwright test",
-    "check": "npm run typecheck && npm run lint && npm run test"
+    "check": "npm run typecheck && npm run lint && npm run test",
+    "db:migrate": "tsx --env-file-if-exists=.env.local scripts/migrate.ts",
+    "db:reset": "tsx --env-file-if-exists=.env.local scripts/migrate.ts --reset && npm run db:seed",
+    "db:seed": "tsx --env-file-if-exists=.env.local --conditions=react-server scripts/seed.ts"
   },
   "dependencies": {
     "@node-rs/argon2": "2.2.2",
