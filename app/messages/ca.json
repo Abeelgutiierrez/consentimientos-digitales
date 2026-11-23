@@ -1,0 +1,11 @@
+{
+  "app": {
+    "name": "Consentiments Digitals",
+    "tagline": "Consentiments digitals per a estudis i centres d'estètica"
+  },
+  "home": {
+    "title": "Consentiments digitals per a estudis i centres d'estètica",
+    "lead": "El client escaneja un QR, omple les seves dades des del mòbil i signa amb el dit. L'estudi rep el PDF signat a l'instant.",
+    "panel": "Panell de l'estudi"
+  }
+}

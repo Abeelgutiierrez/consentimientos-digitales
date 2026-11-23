@@ -1,0 +1,11 @@
+{
+  "app": {
+    "name": "Consentimientos Digitales",
+    "tagline": "Consentimientos digitales para estudios y centros de estética"
+  },
+  "home": {
+    "title": "Consentimientos digitales para estudios y centros de estética",
+    "lead": "El cliente escanea un QR, rellena sus datos desde su móvil y firma con el dedo. El estudio recibe el PDF firmado al instante.",
+    "panel": "Panel del estudio"
+  }
+}

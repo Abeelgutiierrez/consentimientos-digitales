@@ -1,0 +1,54 @@
+{
+  "name": "consentimientos-digitales",
+  "version": "2.0.0-piloto",
+  "private": true,
+  "scripts": {
+    "setup:env": "node scripts/setup-env.mjs",
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint",
+    "typecheck": "next typegen && tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "e2e:prepare": "echo sin preparacion todavia",
+    "test:e2e": "next build && playwright test",
+    "check": "npm run typecheck && npm run lint && npm run test"
+  },
+  "dependencies": {
+    "@node-rs/argon2": "2.2.2",
+    "@pdf-lib/fontkit": "1.1.1",
+    "drizzle-orm": "0.45.4",
+    "fflate": "0.8.3",
+    "next": "16.4.6",
+    "next-intl": "4.14.9",
+    "pdf-lib": "1.17.1",
+    "pino": "10.4.0",
+    "postgres": "4.1.0",
+    "qrcode": "1.5.4",
+    "react": "19.3.0",
+    "react-dom": "19.3.0",
+    "resend": "6.37.0",
+    "server-only": "0.0.1",
+    "zod": "4.6.7"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.65.0",
+    "@tailwindcss/turbopack": "4.3.3",
+    "@types/node": "24.10.1",
+    "@types/qrcode": "1.5.6",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "dotenv": "18.0.9",
+    "drizzle-kit": "0.31.11",
+    "eslint": "^9",
+    "eslint-config-next": "16.4.6",
+    "tailwindcss": "4.3.3",
+    "tsx": "4.23.15",
+    "typescript": "^5",
+    "vitest": "5.1.0"
+  },
+  "engines": {
+    "node": ">=20.9"
+  }
+}

@@ -1,0 +1,26 @@
+# Base de datos local para desarrollo y tests.
+# En producción: Postgres gestionado en una región de la UE (ver README).
+services:
+  db:
+    image: postgres:17-alpine
+    container_name: consentimientos-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: consent_owner
+      POSTGRES_PASSWORD: consent_owner_dev
+      POSTGRES_DB: consentimientos
+      TZ: Europe/Madrid
+    ports:
+      # 5433 en el host para no chocar con un Postgres instalado en Windows.
+      - "5433:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./docker/initdb:/docker-entrypoint-initdb.d:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U consent_owner -d consentimientos"]
+      interval: 3s
+      timeout: 3s
+      retries: 20
+
+volumes:
+  pgdata:
