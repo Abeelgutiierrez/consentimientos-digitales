@@ -11,7 +11,7 @@ import { upsertClientFromConsent } from "./clients";
 import { decryptBytes, decryptJson, decryptString, encryptBytes, encryptJson, encryptString, newToken, tokenHash } from "./crypto";
 import { type AnnexData, buildConsentPdf } from "./pdf";
 import { getStudio, listArtists, studioBranding, studioSnapshot } from "./studios";
-import { NotFoundError, newId, type Scope } from "./tenant";
+import { NotFoundError, newId, type Scope, withoutStudio } from "./tenant";
 
 export const PUBLIC_LINK_DAYS = 30;
 
@@ -248,4 +248,32 @@ export async function getConsentDetail(scope: Scope, consentId: string) {
     .from(consentPdfs).where(and(eq(consentPdfs.studioId, scope.studioId), eq(consentPdfs.consentId, consentId))).orderBy(desc(consentPdfs.version));
   await audit(scope, "consent.viewed", { type: "consent", id: consentId });
   return { row, payload, annex, pdfs };
+}
+
+// ---------------------------------------------------------------- enlace público del cliente
+
+export type PublicLink = { studioId: string; expiresAt: Date } | { expired: true } | null;
+
+/** Valida el enlace de descarga del cliente: el token debe corresponder a ese consentimiento y no haber caducado. */
+export async function resolvePublicLink(consentId: string, token: string, now = new Date()): Promise<PublicLink> {
+  if (!/^cs_[0-9a-f]{20}$/.test(consentId) || !/^[\w-]{20,100}$/.test(token)) return null;
+  const row = await withoutStudio(async (tx) => {
+    const rows = await tx.execute<{ consent_id: string; studio_id: string; expires_at: string }>(
+      sql`select * from public_consent_by_token(${tokenHash(token)})`,
+    );
+    return rows[0] ?? null;
+  });
+  if (!row || row.consent_id !== consentId) return null;
+  const expiresAt = new Date(row.expires_at);
+  if (expiresAt.getTime() < now.getTime()) return { expired: true };
+  return { studioId: row.studio_id, expiresAt };
+}
+
+/** Datos mínimos para la página de agradecimiento (sin datos de salud). */
+export async function publicSummary(scope: Scope, consentId: string) {
+  const [row] = await scope.tx.select({ signedAt: consents.signedAt, firstName: clients.firstName })
+    .from(consents).innerJoin(clients, and(eq(clients.id, consents.clientId), eq(clients.studioId, consents.studioId)))
+    .where(and(eq(consents.studioId, scope.studioId), eq(consents.id, consentId)));
+  if (!row) throw new NotFoundError();
+  return row;
 }

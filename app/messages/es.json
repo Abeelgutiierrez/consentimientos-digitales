@@ -18,7 +18,10 @@
     "no": "No",
     "saved": "Cambios guardados.",
     "language": "Idioma",
-    "languages": { "es": "Español", "ca": "Català" },
+    "languages": {
+      "es": "Español",
+      "ca": "Català"
+    },
     "notFound": "Página no encontrada",
     "notFoundHint": "Revisa la dirección o vuelve al inicio.",
     "goHome": "Ir al inicio",
@@ -51,7 +54,10 @@
     "openForm": "Abrir formulario ↗",
     "logout": "Cerrar sesión",
     "panel": "Panel del estudio",
-    "roles": { "owner": "Dueño/a", "artist": "Artista" }
+    "roles": {
+      "owner": "Dueño/a",
+      "artist": "Artista"
+    }
   },
   "dashboard": {
     "hello": "Hola, {name}",
@@ -112,5 +118,102 @@
     "newHint": "Al menos 10 caracteres. Se cerrarán tus otras sesiones.",
     "passwordChanged": "Contraseña cambiada. Vuelve a entrar con la nueva.",
     "language": "Idioma de la interfaz"
+  },
+  "form": {
+    "subtitle": "Consentimiento informado",
+    "stepOf": "Paso {n} de {total}",
+    "continue": "Continuar",
+    "back": "Atrás",
+    "submit": "Firmar y enviar",
+    "submitting": "Generando tu consentimiento…",
+    "s1Title": "Tus datos",
+    "s1Lead": "Solo te llevará un par de minutos. Los usamos para tu ficha y para el consentimiento.",
+    "firstName": "Nombre",
+    "lastName": "Apellidos",
+    "dni": "DNI / NIE / Pasaporte",
+    "birthDate": "Fecha de nacimiento",
+    "phone": "Teléfono",
+    "email": "Correo electrónico",
+    "address": "Dirección",
+    "optional": "(opcional)",
+    "minorNotice": "Eres menor de edad.",
+    "minorNoticeText": "Necesitamos los datos y la firma de tu padre, madre o tutor legal.",
+    "tutorName": "Nombre del representante legal",
+    "tutorDni": "DNI del representante",
+    "relation": "Relación",
+    "choose": "Elige…",
+    "relations": {
+      "madre": "Madre",
+      "padre": "Padre",
+      "tutor": "Tutor/a legal"
+    },
+    "maturity": "Aporto el certificado de madurez",
+    "maturityHint": "Obligatorio para menores de 16 años en Catalunya.",
+    "s2Title": "¿Qué te vas a hacer?",
+    "s2Lead": "Lo puedes completar junto a tu artista.",
+    "artist": "Artista / aplicador",
+    "zone": "Zona del cuerpo",
+    "zonePh": "Ej.: antebrazo izquierdo",
+    "description": "Descripción",
+    "descriptionPh": "Ej.: rosa fine line de 8 cm",
+    "s3Title": "Tu salud",
+    "s3Lead": "Es confidencial y nos ayuda a saber si es seguro hacerte el servicio hoy.",
+    "healthNotes": "Cuéntanos los detalles de lo que has marcado con «Sí»",
+    "s4Title": "Información importante",
+    "s4Lead": "Léela con calma. Si tienes dudas, pregunta a tu artista antes de firmar.",
+    "optionalTag": "Opcional",
+    "legalLangNote": "El texto legal está disponible solo en castellano mientras se revisa la traducción.",
+    "s5Title": "Firma",
+    "s5Lead": "Firma con el dedo dentro del recuadro.",
+    "s5LeadMinor": "Firma con el dedo y pide a tu padre, madre o tutor que firme debajo.",
+    "signatureOf": "Firma de {name}",
+    "yourSignature": "Tu firma",
+    "signHere": "Firma aquí",
+    "tutorSignature": "Firma del representante legal",
+    "tutorSignHere": "Firma del padre, madre o tutor",
+    "clear": "Borrar",
+    "signNotice": "Al pulsar «Firmar y enviar» se generará tu consentimiento en PDF con la fecha, la hora y una huella digital que garantiza que no se puede modificar.",
+    "offline": "Sin conexión con el estudio. Comprueba la Wi‑Fi e inténtalo de nuevo.",
+    "sendError": "No se ha podido enviar. Inténtalo de nuevo.",
+    "footer": "Tus datos se tratan de forma confidencial."
+  },
+  "validation": {
+    "firstName": "Indica tu nombre",
+    "lastName": "Indica tus apellidos",
+    "document": "Documento no válido",
+    "email": "Correo no válido",
+    "phone": "Teléfono no válido",
+    "birthDate": "Fecha de nacimiento no válida",
+    "service": "Elige un servicio",
+    "zone": "Indica la zona del cuerpo",
+    "artist": "Elige el aplicador",
+    "healthAnswer": "Responde a esta pregunta",
+    "healthNotes": "Has respondido «Sí» a alguna pregunta: explica brevemente los detalles",
+    "checkRead": "Debes confirmar que has leído la información",
+    "checkPrivacy": "Debes aceptar el tratamiento de datos para continuar",
+    "marketingNeedsEmail": "Para enviarte el regalo necesitamos tu correo: vuelve al paso 1 para añadirlo o desmarca esta casilla.",
+    "tutorName": "Indica el nombre del representante legal",
+    "relation": "Indica la relación",
+    "maturityCert": "Los menores de 16 años deben aportar el certificado de madurez",
+    "signature": {
+      "missing": "Falta la firma",
+      "invalid": "Firma no válida",
+      "tooComplex": "Firma demasiado compleja",
+      "tooShort": "La firma es demasiado corta. Firma de nuevo, por favor."
+    }
+  },
+  "thanks": {
+    "title": "¡Listo, {name}!",
+    "signedAt": "Tu consentimiento se ha firmado correctamente el {date}.",
+    "ref": "Ref. {ref}",
+    "download": "Descargar mi copia (PDF)",
+    "linkExpires": "El enlace de descarga caduca el {date}. Después, pídele una copia al estudio.",
+    "returnDevice": "Ya puedes devolver el dispositivo al estudio.",
+    "another": "Nuevo consentimiento"
+  },
+  "publicErrors": {
+    "studioNotFound": "Estudio no encontrado",
+    "linkExpired": "Este enlace ha caducado",
+    "linkExpiredHint": "Pide una copia de tu consentimiento al estudio."
   }
 }

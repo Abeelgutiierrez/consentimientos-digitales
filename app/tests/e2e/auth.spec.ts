@@ -1,17 +1,6 @@
-import { expect, test, type Page } from "@playwright/test";
+import { expect, test } from "@playwright/test";
+import { loginAs, notice } from "./helpers";
 
-const PASSWORD = "demo1234";
-
-async function loginAs(page: Page, email: string, password = PASSWORD, { expectOk = true } = {}) {
-  await page.goto("/login");
-  await page.getByLabel(/correo electrónico/i).fill(email);
-  await page.getByLabel(/contraseña/i).fill(password);
-  await page.getByRole("button", { name: "Entrar" }).click();
-  if (expectOk) await expect(page).toHaveURL(/\/panel$/);
-}
-
-// Next añade su propio role="alert" (anunciador de rutas): buscamos nuestros avisos.
-const notice = (page: Page) => page.locator(".notice[role=alert]");
 
 test("contraseña incorrecta: mensaje genérico y sin acceso", async ({ page }) => {
   await loginAs(page, "marc@agujafina.example", "incorrecta", { expectOk: false });

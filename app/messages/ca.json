@@ -18,7 +18,10 @@
     "no": "No",
     "saved": "Canvis desats.",
     "language": "Idioma",
-    "languages": { "es": "Español", "ca": "Català" },
+    "languages": {
+      "es": "Español",
+      "ca": "Català"
+    },
     "notFound": "No s'ha trobat la pàgina",
     "notFoundHint": "Revisa l'adreça o torna a l'inici.",
     "goHome": "Ves a l'inici",
@@ -51,7 +54,10 @@
     "openForm": "Obre el formulari ↗",
     "logout": "Tanca la sessió",
     "panel": "Panell de l'estudi",
-    "roles": { "owner": "Propietari/ària", "artist": "Artista" }
+    "roles": {
+      "owner": "Propietari/ària",
+      "artist": "Artista"
+    }
   },
   "dashboard": {
     "hello": "Hola, {name}",
@@ -112,5 +118,102 @@
     "newHint": "Almenys 10 caràcters. Es tancaran les altres sessions.",
     "passwordChanged": "Contrasenya canviada. Torna a entrar amb la nova.",
     "language": "Idioma de la interfície"
+  },
+  "form": {
+    "subtitle": "Consentiment informat",
+    "stepOf": "Pas {n} de {total}",
+    "continue": "Continua",
+    "back": "Enrere",
+    "submit": "Signa i envia",
+    "submitting": "Generant el teu consentiment…",
+    "s1Title": "Les teves dades",
+    "s1Lead": "Només et prendrà un parell de minuts. Les fem servir per a la teva fitxa i per al consentiment.",
+    "firstName": "Nom",
+    "lastName": "Cognoms",
+    "dni": "DNI / NIE / Passaport",
+    "birthDate": "Data de naixement",
+    "phone": "Telèfon",
+    "email": "Correu electrònic",
+    "address": "Adreça",
+    "optional": "(opcional)",
+    "minorNotice": "Ets menor d'edat.",
+    "minorNoticeText": "Necessitem les dades i la signatura del teu pare, mare o tutor legal.",
+    "tutorName": "Nom del representant legal",
+    "tutorDni": "DNI del representant",
+    "relation": "Relació",
+    "choose": "Tria…",
+    "relations": {
+      "madre": "Mare",
+      "padre": "Pare",
+      "tutor": "Tutor/a legal"
+    },
+    "maturity": "Aporto el certificat de maduresa",
+    "maturityHint": "Obligatori per a menors de 16 anys a Catalunya.",
+    "s2Title": "Què et faràs?",
+    "s2Lead": "Ho pots completar amb el teu artista.",
+    "artist": "Artista / aplicador",
+    "zone": "Zona del cos",
+    "zonePh": "Ex.: avantbraç esquerre",
+    "description": "Descripció",
+    "descriptionPh": "Ex.: rosa fine line de 8 cm",
+    "s3Title": "La teva salut",
+    "s3Lead": "És confidencial i ens ajuda a saber si és segur fer-te el servei avui.",
+    "healthNotes": "Explica'ns els detalls del que has marcat amb «Sí»",
+    "s4Title": "Informació important",
+    "s4Lead": "Llegeix-la amb calma. Si tens dubtes, pregunta al teu artista abans de signar.",
+    "optionalTag": "Opcional",
+    "legalLangNote": "El text legal només està disponible en castellà mentre se'n revisa la traducció.",
+    "s5Title": "Signatura",
+    "s5Lead": "Signa amb el dit dins del requadre.",
+    "s5LeadMinor": "Signa amb el dit i demana al teu pare, mare o tutor que signi a sota.",
+    "signatureOf": "Signatura de {name}",
+    "yourSignature": "La teva signatura",
+    "signHere": "Signa aquí",
+    "tutorSignature": "Signatura del representant legal",
+    "tutorSignHere": "Signatura del pare, mare o tutor",
+    "clear": "Esborra",
+    "signNotice": "En prémer «Signa i envia» es generarà el teu consentiment en PDF amb la data, l'hora i una empremta digital que garanteix que no es pot modificar.",
+    "offline": "Sense connexió amb l'estudi. Comprova la Wi‑Fi i torna-ho a provar.",
+    "sendError": "No s'ha pogut enviar. Torna-ho a provar.",
+    "footer": "Les teves dades es tracten de manera confidencial."
+  },
+  "validation": {
+    "firstName": "Indica el teu nom",
+    "lastName": "Indica els teus cognoms",
+    "document": "Document no vàlid",
+    "email": "Correu no vàlid",
+    "phone": "Telèfon no vàlid",
+    "birthDate": "Data de naixement no vàlida",
+    "service": "Tria un servei",
+    "zone": "Indica la zona del cos",
+    "artist": "Tria l'aplicador",
+    "healthAnswer": "Respon aquesta pregunta",
+    "healthNotes": "Has respost «Sí» a alguna pregunta: explica breument els detalls",
+    "checkRead": "Has de confirmar que has llegit la informació",
+    "checkPrivacy": "Has d'acceptar el tractament de dades per continuar",
+    "marketingNeedsEmail": "Per enviar-te el regal necessitem el teu correu: torna al pas 1 per afegir-lo o desmarca aquesta casella.",
+    "tutorName": "Indica el nom del representant legal",
+    "relation": "Indica la relació",
+    "maturityCert": "Els menors de 16 anys han d'aportar el certificat de maduresa",
+    "signature": {
+      "missing": "Falta la signatura",
+      "invalid": "Signatura no vàlida",
+      "tooComplex": "Signatura massa complexa",
+      "tooShort": "La signatura és massa curta. Torna a signar, si us plau."
+    }
+  },
+  "thanks": {
+    "title": "Fet, {name}!",
+    "signedAt": "El teu consentiment s'ha signat correctament el {date}.",
+    "ref": "Ref. {ref}",
+    "download": "Descarrega la meva còpia (PDF)",
+    "linkExpires": "L'enllaç de descàrrega caduca el {date}. Després, demana una còpia a l'estudi.",
+    "returnDevice": "Ja pots tornar el dispositiu a l'estudi.",
+    "another": "Nou consentiment"
+  },
+  "publicErrors": {
+    "studioNotFound": "No s'ha trobat l'estudi",
+    "linkExpired": "Aquest enllaç ha caducat",
+    "linkExpiredHint": "Demana una còpia del teu consentiment a l'estudi."
   }
 }

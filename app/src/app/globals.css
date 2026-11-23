@@ -299,3 +299,9 @@
   .rows .table-actions { justify-content: flex-start; }
   .rows .table-actions input { width: 170px; max-width: 100%; }
 }
+
+@layer components {
+  /* Campo con el error fuera de la etiqueta (accesibilidad) */
+  .field-box { margin-bottom: 14px; }
+  .field-box > label.field { margin-bottom: 0; }
+}
