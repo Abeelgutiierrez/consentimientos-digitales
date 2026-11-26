@@ -233,3 +233,16 @@ table.list tr.link:hover td { background: var(--soft); }
 .panel { background: linear-gradient(to right, #16161d 236px, var(--bg) 236px); }
 @media (max-width: 860px) { .panel { background: var(--bg); } }
 .ink-table { min-width: 680px; }
+
+/* ---------- Modo demo ---------- */
+.demo-bar {
+  display: flex; flex-wrap: wrap; gap: 8px 16px; align-items: center; justify-content: space-between;
+  margin: 0 0 18px; padding: 10px 14px; border-radius: 10px;
+  background: var(--warn-bg); color: var(--warn); font-size: .88rem;
+}
+.demo-bar a { font-weight: 600; white-space: nowrap; }
+.demo-fill {
+  display: flex; flex-wrap: wrap; gap: 8px 12px; align-items: center; justify-content: space-between;
+  margin: 0 0 16px; padding: 10px 12px; border-radius: 10px;
+  background: var(--warn-bg); color: var(--warn); font-size: .88rem;
+}

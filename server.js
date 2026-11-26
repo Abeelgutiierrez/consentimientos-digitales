@@ -19,6 +19,7 @@ const email = require('./lib/email');
 const { qrSvg } = require('./lib/qr');
 const pub = require('./lib/views/public');
 const panel = require('./lib/views/panel');
+const landing = require('./lib/views/landing');
 const { SERVICES } = require('./lib/content');
 
 const PORT = Number(process.env.PORT) || 3000;
@@ -37,11 +38,22 @@ function loadEnv(file) {
   }
 }
 
-function baseUrl() {
+// Dirección que se codifica en los QR.
+// 1) PUBLIC_URL si está definida. 2) Si se entra por un dominio (p. ej. Easypanel, detrás de un proxy),
+// ese mismo dominio. 3) En local, la IP de la Wi‑Fi para que el móvil pueda abrirla.
+function baseUrl(req) {
   if (process.env.PUBLIC_URL) return process.env.PUBLIC_URL.replace(/\/$/, '');
+  const host = req && String(req.headers['x-forwarded-host'] || req.headers.host || '').split(',')[0].trim();
+  if (host && /^[\w.-]+(:\d+)?$/.test(host) && !/^(localhost|127\.|\[?::1)/i.test(host)) {
+    const proto = String(req.headers['x-forwarded-proto'] || 'http').split(',')[0].trim() === 'https' ? 'https' : 'http';
+    return `${proto}://${host}`;
+  }
   const ip = util.lanAddresses()[0] || 'localhost';
   return `http://${ip}:${PORT}`;
 }
+
+// En local (sin dominio público) el móvil tiene que estar en la misma Wi‑Fi.
+const isLanUrl = (u) => /^http:\/\/(\d+\.){3}\d+:\d+$/.test(u);
 
 const SECURITY_HEADERS = {
   'X-Content-Type-Options': 'nosniff',
@@ -92,15 +104,33 @@ function currentStudio(req) {
   return db.q.studioById(s.studioId) || null;
 }
 
-function startSession(res, studio) {
+function startSession(res, studio, { demo = false } = {}) {
   const sid = util.id() + util.id();
-  sessions.set(sid, { studioId: studio.id, exp: Date.now() + SESSION_HOURS * 3600000 });
+  sessions.set(sid, { studioId: studio.id, demo, exp: Date.now() + SESSION_HOURS * 3600000 });
   return `sid=${sid}; HttpOnly; SameSite=Lax; Path=/; Max-Age=${SESSION_HOURS * 3600}`;
+}
+
+function isDemoSession(req) {
+  const s = sessions.get(util.parseCookies(req).sid);
+  return !!(s && s.demo);
+}
+
+// Acceso al panel sin contraseña desde /demo. Se desactiva con DEMO_OPEN=0.
+const demoOpen = () => process.env.DEMO_OPEN !== '0';
+const demoStudios = () => db.get().studios;
+
+// Datos de contacto comerciales (opcionales, en .env).
+function contact() {
+  const wa = String(process.env.CONTACT_WHATSAPP || '').replace(/\D/g, '');
+  return {
+    email: process.env.CONTACT_EMAIL || '',
+    whatsapp: wa ? `https://wa.me/${wa}?text=${encodeURIComponent('Hola, he visto la demo de consentimientos digitales y me interesa para mi estudio.')}` : '',
+  };
 }
 
 function renderPanel(res, studio, active, view, flashKey, extraFlash) {
   const flash = extraFlash || FLASH[flashKey] || null;
-  html(res, panel.shell(studio, { active, flash, ...view }));
+  html(res, panel.shell(studio, { active, flash, demo: !!res.demoSession, ...view }));
 }
 
 // ---------------------------------------------------------------- rutas
@@ -115,8 +145,26 @@ async function handle(req, res) {
   if (method === 'GET' && p.startsWith('/static/')) return serveStatic(res, p.slice(8));
   if (method === 'GET' && p === '/health') return json(res, { ok: true });
 
-  // --- Público
-  if (method === 'GET' && p === '/') return html(res, pub.landing(db.get().studios, baseUrl()));
+  // --- Público: portada comercial y demo guiada
+  if (method === 'GET' && p === '/') return html(res, landing.home(demoStudios(), contact()));
+  if (method === 'GET' && p === '/demo') {
+    const studios = demoStudios();
+    const studio = studios.find((s) => s.slug === url.searchParams.get('estudio')) || studios[0];
+    if (!studio) return html(res, pub.notFound('No hay estudios de demostración'), 404);
+    const base = baseUrl(req);
+    const phoneUrl = `${base}/s/${studio.slug}?demo=1`;
+    return html(res, landing.demo(studios, studio, { phoneUrl, qr: qrSvg(phoneUrl, { size: 200 }), lan: isLanUrl(base), open: demoOpen() }, contact()));
+  }
+  // Entrada al panel con un clic (solo en modo demo, datos ficticios)
+  if (method === 'GET' && p === '/demo/entrar') {
+    const studio = db.q.studioBySlug(url.searchParams.get('estudio')) || demoStudios()[0];
+    if (!demoOpen() || !studio) return redirect(res, '/panel/login');
+    const to = url.searchParams.get('ir') || '';
+    const target = /^\/panel(\/[\w/-]*)?$/.test(to) ? to : '/panel';
+    return redirect(res, target, { 'Set-Cookie': startSession(res, studio, { demo: true }) });
+  }
+  // Portada técnica anterior (estudios, direcciones para el móvil)
+  if (method === 'GET' && p === '/inicio') return html(res, pub.landing(db.get().studios, baseUrl(req)));
 
   if (method === 'GET' && (r = m(/^\/s\/([\w-]+)$/))) {
     const studio = db.q.studioBySlug(r[1]);
@@ -144,7 +192,11 @@ async function handle(req, res) {
     if (!studio || !consent || consent.studioId !== studio.id || consent.publicToken !== url.searchParams.get('t')) {
       return html(res, pub.notFound(), 404);
     }
-    return html(res, pub.thanks(studio, consent, db.q.client(consent.clientId)));
+    const demoMode = url.searchParams.get('demo') === '1';
+    return html(res, pub.thanks(studio, consent, db.q.client(consent.clientId), {
+      demo: demoMode,
+      panelHref: demoMode && demoOpen() ? `/demo/entrar?estudio=${encodeURIComponent(studio.slug)}&ir=${encodeURIComponent('/panel/consentimientos/' + consent.id)}` : null,
+    }));
   }
 
   if (method === 'GET' && (r = m(/^\/c\/([\w]+)\/pdf$/))) {
@@ -168,14 +220,16 @@ async function handle(req, res) {
   }
   if (method === 'POST' && p === '/panel/logout') {
     const sid = util.parseCookies(req).sid;
+    const wasDemo = isDemoSession(req);
     if (sid) sessions.delete(sid);
-    return redirect(res, '/panel/login', { 'Set-Cookie': 'sid=; Path=/; Max-Age=0' });
+    return redirect(res, wasDemo ? '/demo' : '/panel/login', { 'Set-Cookie': 'sid=; Path=/; Max-Age=0' });
   }
 
   // --- Panel (requiere sesión)
   if (p === '/panel' || p.startsWith('/panel/')) {
     const studio = currentStudio(req);
     if (!studio) return redirect(res, '/panel/login');
+    res.demoSession = isDemoSession(req);
     return handlePanel(req, res, url, p, studio);
   }
 
@@ -290,8 +344,9 @@ async function handlePanel(req, res, url, p, studio) {
 
   // QR
   if (method === 'GET' && p === '/panel/qr') {
-    const formUrl = `${baseUrl()}/s/${studio.slug}`;
-    const lanNote = process.env.PUBLIC_URL ? '' : 'El móvil tiene que estar conectado a la misma Wi‑Fi que este ordenador. Si Windows pregunta por el firewall al arrancar, permite el acceso en redes privadas.';
+    const base = baseUrl(req);
+    const formUrl = `${base}/s/${studio.slug}`;
+    const lanNote = !isLanUrl(base) ? '' : 'El móvil tiene que estar conectado a la misma Wi‑Fi que este ordenador. Si Windows pregunta por el firewall al arrancar, permite el acceso en redes privadas.';
     return renderPanel(res, studio, 'qr', panel.qrPage(studio, { url: formUrl, svg: qrSvg(formUrl, { size: 260 }), lanNote }), msg);
   }
 
@@ -392,6 +447,7 @@ async function main() {
     console.log('  ─────────────────────────────────────────────');
     console.log(`  En este ordenador:   http://localhost:${PORT}`);
     for (const ip of lan) console.log(`  Desde el móvil:      http://${ip}:${PORT}`);
+    console.log(`  Demo guiada:         http://localhost:${PORT}/demo`);
     console.log(`  Panel del estudio:   http://localhost:${PORT}/panel   (contraseña: demo1234)`);
     console.log('  ─────────────────────────────────────────────');
     console.log('  Pulsa Ctrl+C para detener.\n');

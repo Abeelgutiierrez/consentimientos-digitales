@@ -58,6 +58,15 @@ Verás algo así:
 | `npm run reset` | Borra todo y vuelve a cargar los datos de demo |
 | `$env:PORT=3001; node server.js` | Usar otro puerto si el 3000 está ocupado |
 
+## Portada comercial y demo guiada
+
+- `/` · **Portada comercial** para vender el producto a un estudio, con el botón «Probar la demo».
+- `/demo` · **Demo guiada**: el formulario del cliente dentro de un móvil (con «Rellenar con datos de ejemplo»)
+  y, al lado, los pasos. Al firmar, un clic lleva al panel del estudio **sin contraseña** y directo al
+  consentimiento recién firmado. También trae un QR para probarlo desde el móvil.
+- `/inicio` · la portada técnica anterior (estudios y direcciones para el móvil).
+- En `.env`: `CONTACT_EMAIL` y `CONTACT_WHATSAPP` muestran los botones de contacto; `DEMO_OPEN=0` quita la entrada sin contraseña.
+
 ## Guion para enseñarla a un estudio (5 minutos)
 
 1. Abre `http://localhost:3000/panel`, entra en **Aguja Fina Tattoo** (`demo1234`).
@@ -116,6 +125,26 @@ data/                  Se crea al arrancar: db.json y PDFs (no se sube a Git)
 Por defecto los correos se guardan en **Correos enviados**. Para enviarlos de verdad,
 crea una cuenta en [Resend](https://resend.com), copia `.env.example` como `.env` y rellena
 `RESEND_API_KEY` y `RESEND_FROM` (con un dominio verificado en Resend).
+
+## Publicar en Easypanel
+
+El repositorio incluye un `Dockerfile` (solo la demo de la raíz; la v2 de `app/` no entra en la imagen).
+
+1. En Easypanel, crea un proyecto y dentro un servicio **App**.
+2. En **Source**, elige **GitHub**, este repositorio y la rama a desplegar.
+3. En **Build**, selecciona **Dockerfile** (ruta `Dockerfile`).
+4. En **Mounts**, añade un **Volume** con _mount path_ `/app/data`, para que los consentimientos y los PDF
+   no se pierdan en cada despliegue.
+5. En **Domains**, añade un dominio apuntando al puerto **3000** (con HTTPS).
+6. Pulsa **Deploy**. La portada queda en `/` y la demo guiada en `/demo`.
+
+La primera vez se cargan solos los datos ficticios. Los QR usan el dominio por el que se entra; si quieres
+fijarlo, define `PUBLIC_URL=https://tu-dominio`. Variables opcionales (en **Environment**): `CONTACT_EMAIL`,
+`CONTACT_WHATSAPP`, `DEMO_OPEN=0` (quitar la entrada sin contraseña), `RESEND_API_KEY` y `RESEND_FROM`.
+
+> La demo pública la comparten todos los que la prueban: cada uno ve lo que han firmado los demás
+> (siempre datos inventados). Para dejarla como nueva, en la **Console** del servicio ejecuta
+> `node scripts/seed.js` y reinicia el servicio.
 
 ## Enseñarla fuera de tu Wi‑Fi (opcional)
 

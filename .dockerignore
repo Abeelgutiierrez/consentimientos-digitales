@@ -1,0 +1,13 @@
+# Solo entra en la imagen la demo de la raíz (la v2 de app/ tiene su propio despliegue).
+app
+data
+node_modules
+.git
+.github
+.vscode
+.claude
+.env
+.env.*
+*.log
+Dockerfile
+.dockerignore

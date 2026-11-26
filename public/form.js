@@ -185,7 +185,7 @@
       return res.json().then(function (body) { return { ok: res.ok, body: body }; });
     }).then(function (r) {
       if (r.ok && r.body.redirect) {
-        window.location.href = r.body.redirect;
+        window.location.href = r.body.redirect + (/[?&]demo=1(&|$)/.test(window.location.search) ? '&demo=1' : '');
         return;
       }
       var errors = (r.body && r.body.errors) || {};
@@ -240,6 +240,63 @@
   form.addEventListener('keydown', function (e) {
     if (e.key === 'Enter' && e.target.tagName === 'INPUT') { e.preventDefault(); btnNext.click(); }
   });
+
+  // ---------- Modo demo (?demo=1): rellenar con datos ficticios ----------
+  // Solo rellena lo obligatorio. Las casillas opcionales (promociones, fotos) se quedan sin marcar
+  // y la firma la hace siempre la persona que prueba la demo.
+  function demoFill() {
+    var pick = function (a) { return a[Math.floor(Math.random() * a.length)]; };
+    var first = pick(['Laia', 'Marc', 'Júlia', 'Pol', 'Martina', 'Arnau', 'Noa', 'Biel', 'Carla', 'Èric']);
+    var last = pick(['Puig Ferrer', 'Soler Roca', 'Vidal Serra', 'Casals Pons', 'Bosch Font', 'Mas Riera']);
+    var num = 10000000 + Math.floor(Math.random() * 89999999);
+    var dni = num + 'TRWAGMYFPDXBNJZSQVHLCKE'.charAt(num % 23);
+    // Adulto de 24-38 años que cumple años dentro de 3 días (así sale en «Próximos cumpleaños»).
+    var b = new Date();
+    b.setDate(b.getDate() + 3);
+    b.setFullYear(b.getFullYear() - (24 + Math.floor(Math.random() * 15)));
+    var iso = b.getFullYear() + '-' + String(b.getMonth() + 1).padStart(2, '0') + '-' + String(b.getDate()).padStart(2, '0');
+    var mail = (first + '.' + last.split(' ')[0]).toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '') + '@example.com';
+    var set = function (name, value) {
+      var el = $(name);
+      if (!el) return;
+      el.value = value;
+      el.dispatchEvent(new Event('input', { bubbles: true }));
+      el.dispatchEvent(new Event('change', { bubbles: true }));
+    };
+    set('firstName', first);
+    set('lastName', last);
+    set('dni', dni);
+    set('birthDate', iso);
+    set('phone', '6' + String(Math.floor(10000000 + Math.random() * 89999999)));
+    set('email', mail);
+    var artist = $('artist');
+    if (artist && artist.options.length > 1) set('artist', artist.options[1].value);
+    set('zone', pick(['Antebrazo izquierdo', 'Tobillo derecho', 'Omóplato', 'Muñeca interior']));
+    set('description', 'Diseño de ejemplo para la demo');
+    CFG.questions.forEach(function (k) {
+      var no = form.querySelector('input[name="h_' + k + '"][value="no"]');
+      if (no) { no.checked = true; no.dispatchEvent(new Event('change', { bubbles: true })); }
+    });
+    $('c_read').checked = true;
+    $('c_privacy').checked = true;
+    clearErrors();
+  }
+
+  if (/[?&]demo=1(&|$)/.test(window.location.search)) {
+    var bar = document.createElement('div');
+    bar.className = 'demo-fill';
+    bar.innerHTML = '<span><b>Demo</b> · ¿Vas con prisa?</span>';
+    var fillBtn = document.createElement('button');
+    fillBtn.type = 'button';
+    fillBtn.className = 'btn small';
+    fillBtn.textContent = 'Rellenar con datos de ejemplo';
+    fillBtn.addEventListener('click', function () {
+      demoFill();
+      fillBtn.textContent = 'Listo ✓ Pulsa «Continuar»';
+    });
+    bar.appendChild(fillBtn);
+    form.insertBefore(bar, form.firstChild);
+  }
 
   show(0);
 })();
