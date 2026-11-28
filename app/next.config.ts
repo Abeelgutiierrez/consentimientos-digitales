@@ -1,4 +1,5 @@
 import type { NextConfig } from "next";
+import { networkInterfaces } from "node:os";
 import createNextIntlPlugin from "next-intl/plugin";
 
 const withNextIntl = createNextIntlPlugin("./src/i18n/request.ts");
@@ -15,7 +16,14 @@ const securityHeaders = [
     : []),
 ];
 
+// Demo en directo: el móvil del comerciante abre el formulario por la IP de la Wi-Fi.
+// En desarrollo, Next bloquea los recursos pedidos desde otro origen si no se permiten aquí.
+const localAddresses = Object.values(networkInterfaces()).flatMap((list) =>
+  (list ?? []).filter((a) => a.family === "IPv4").map((a) => a.address),
+);
+
 const nextConfig: NextConfig = {
+  allowedDevOrigins: ["localhost", "127.0.0.1", ...localAddresses],
   // Cache Components desactivado a propósito: el panel maneja datos de salud y
   // preferimos que todo sea dinámico, sin cachés de servidor cuyas claves se
   // guardan en texto plano. Ver docs/decisiones.md.

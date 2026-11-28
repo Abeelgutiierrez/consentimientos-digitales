@@ -5,6 +5,8 @@ import { getLocale, getTranslations } from "next-intl/server";
 import { accentStyle } from "@/core/color";
 import { type ServiceKey, checkTexts, declarations, healthQuestions, infoDocument, isServiceKey, legalLocaleFor, serviceLabel } from "@/core/content";
 import { LocaleSwitch } from "@/components/locale-switch";
+import { SelloCasa } from "@/components/marca";
+import { isDemoStudio } from "@/server/demo";
 import { getStudio, listArtists, studioIdBySlug } from "@/server/studios";
 import { withStudio } from "@/server/tenant";
 import { ConsentForm, type FormConfig } from "./consent-form";
@@ -34,6 +36,7 @@ export default async function PublicFormPage({ params }: PageProps<"/s/[slug]">)
     healthQuestions: healthQuestions(legalLocale),
     checkTexts: checkTexts(legalLocale),
     legalInOtherLanguage: legalLocale !== locale,
+    demo: isDemoStudio(studio.slug),
   };
 
   return (
@@ -48,6 +51,7 @@ export default async function PublicFormPage({ params }: PageProps<"/s/[slug]">)
         <div className="legal-foot">
           {studio.name}{studio.cif ? ` · ${studio.cif}` : ""} · {t("footer")}
           <div style={{ marginTop: 8 }}><LocaleSwitch /></div>
+          <div style={{ marginTop: 14 }}><SelloCasa /></div>
         </div>
       </div>
     </div>

@@ -534,5 +534,31 @@
       "user": "Usuaris i accessos"
     },
     "deleted": "eliminat"
+  },
+  "demo": {
+    "badge": "Mode demo",
+    "fillExample": "Omplir amb dades d'exemple",
+    "thanksTitle": "Ara, l'estudi",
+    "thanksText": "Així ho rep l'estudi: el consentiment amb el PDF signat i la fitxa del client ja creada.",
+    "thanksCta": "Veure-ho al panell de l'estudi",
+    "liveNew": "Nou consentiment signat: {name}",
+    "liveOpen": "Obrir-lo",
+    "liveOn": "En directe",
+    "pageTitle": "Demo en directe",
+    "pageLead": "Ensenya-ho com ho viurà l'estudi: signa des del seu propi mòbil i ho veu arribar al panell en aquest ordinador.",
+    "chooseStudio": "Estudi de la demo",
+    "step1Title": "El client signa al mòbil",
+    "step1Text": "Que escanegi el QR i ompli el formulari. Amb «Omplir amb dades d'exemple» es fa en un minut.",
+    "openHere": "Obrir el formulari aquí",
+    "lanNote": "El mòbil ha d'estar a la mateixa Wi-Fi que aquest ordinador.",
+    "step2Title": "L'estudi el rep a l'instant",
+    "step2Text": "Obre el panell en aquest ordinador abans de signar: el consentiment apareix sol, amb el PDF.",
+    "openPanel": "Obrir el panell de l'estudi",
+    "step3Title": "El que més li interessi",
+    "step3a": "La fitxa del client amb tot l'historial",
+    "step3b": "El PDF signat i la comprovació que ningú no l'ha tocat",
+    "step3c": "El QR del taulell, llest per imprimir",
+    "step3d": "La felicitació d'aniversari, només per a qui va acceptar promocions",
+    "homeCta": "Demo en directe"
   }
 }
