@@ -28,5 +28,5 @@ test("el formulario del cliente se puede usar en catalán", async ({ page }) => 
 test("la portada de pruebas muestra los estudios de demo", async ({ page }) => {
   await page.goto("/");
   await expect(page.getByRole("heading", { name: "Aguja Fina Tattoo" })).toBeVisible();
-  await expect(page.getByRole("link", { name: "Formulario del cliente ↗" }).first()).toHaveAttribute("href", /\/s\//);
+  await expect(page.getByRole("link", { name: "Formulario del cliente" }).first()).toHaveAttribute("href", /\/s\//);
 });

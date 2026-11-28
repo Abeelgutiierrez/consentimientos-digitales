@@ -4,6 +4,7 @@ import { redirect } from "next/navigation";
 import { getTranslations } from "next-intl/server";
 import { currentUser } from "@/server/auth";
 import { LocaleSwitch } from "@/components/locale-switch";
+import { Producto } from "@/components/marca";
 import { LoginForm } from "./login-form";
 
 export const metadata: Metadata = { title: "Acceso" };
@@ -17,6 +18,7 @@ export default async function LoginPage({ searchParams }: PageProps<"/login">) {
   return (
     <main className="login">
       <div style={{ width: "100%", maxWidth: 400 }}>
+        <Producto firma />
         {cambio && <div className="notice ok" role="status">{ta("passwordChanged")}</div>}
         <LoginForm />
         {demo && <div className="demo-hint">{t("demoHint", { email: "marc@agujafina.example", password: "demo1234" })}</div>}

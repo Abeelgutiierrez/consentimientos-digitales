@@ -6,6 +6,7 @@ import { getTranslations } from "next-intl/server";
 import { accentStyle } from "@/core/color";
 import { fmtDate, fmtDateTime } from "@/core/dates";
 import { Icons } from "@/components/icons";
+import { SelloCasa } from "@/components/marca";
 import { publicSummary, resolvePublicLink } from "@/server/consents";
 import { getStudio } from "@/server/studios";
 import { withStudio } from "@/server/tenant";
@@ -42,6 +43,7 @@ export default async function ThanksPage({ params, searchParams }: PageProps<"/s
           <p style={{ marginTop: 16 }} className="muted">{t("returnDevice")}</p>
           <Link className="btn ghost block" href={`/s/${studio.slug}`}>{t("another")}</Link>
         </div>
+        <div className="legal-foot"><SelloCasa /></div>
       </div>
     </div>
   );

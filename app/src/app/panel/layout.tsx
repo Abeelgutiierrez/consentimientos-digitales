@@ -1,7 +1,8 @@
 import type { CSSProperties } from "react";
 import { getTranslations } from "next-intl/server";
-import { accentStyle } from "@/core/color";
+import { inkFor, safeColor } from "@/core/color";
 import { LocaleSwitch } from "@/components/locale-switch";
+import { Producto, SelloCasa } from "@/components/marca";
 import { requireUser, withUser } from "@/server/auth";
 import { getStudio } from "@/server/studios";
 import { logoutAction } from "./actions";
@@ -28,17 +29,20 @@ export default async function PanelLayout({ children }: LayoutProps<"/panel">) {
         ] satisfies NavItem[])
       : []),
   ];
+  // El panel lleva la marca común; el color del estudio solo identifica su insignia.
+  const studioColor = safeColor(studio.color);
   const initials = studio.name.split(/\s+/).map((w) => w[0]).join("").slice(0, 2).toUpperCase();
   return (
-    <div className="panel" style={accentStyle(studio.color) as CSSProperties}>
+    <div className="panel">
       <aside className="side">
+        <Producto sub={t("panel")} />
         <div className="brand">
-          <div className="dot">
+          <div className="dot" style={{ "--studio": studioColor, "--studio-ink": inkFor(studioColor) } as CSSProperties}>
             {studio.logo ? <img src={`/s/${studio.slug}/logo`} alt="" /> : initials}
           </div>
           <div>
             <b>{studio.name}</b>
-            <small>{t("panel")}</small>
+            <small>{studio.city}</small>
           </div>
         </div>
         <PanelNav items={items} />
@@ -49,11 +53,12 @@ export default async function PanelLayout({ children }: LayoutProps<"/panel">) {
             <small>{t(`roles.${user.role}`)} · <a href="/panel/cuenta">{t("account")}</a></small>
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: 8 }}>
               <form action={logoutAction}>
-                <button className="btn ghost small" style={{ color: "#c9c8d3", borderColor: "#33333f" }}>{t("logout")}</button>
+                <button className="btn ghost small" style={{ color: "#d9dce3", borderColor: "#2a2c33" }}>{t("logout")}</button>
               </form>
               <LocaleSwitch dark />
             </div>
           </div>
+          <SelloCasa />
         </div>
       </aside>
       <main className="main">{children}</main>

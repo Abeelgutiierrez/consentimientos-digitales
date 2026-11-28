@@ -15,7 +15,7 @@ export async function LocaleSwitch({ dark = false }: { dark?: boolean }) {
           value={l}
           className={l === locale ? "on" : ""}
           aria-pressed={l === locale}
-          style={dark ? { color: l === locale ? "#fff" : "#9b9aa8" } : undefined}
+          style={dark ? { color: l === locale ? "#000" : "#9a9eaa" } : undefined}
         >
           {l.toUpperCase()}
         </button>
