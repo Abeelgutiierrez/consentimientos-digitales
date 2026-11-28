@@ -6,6 +6,7 @@ import { accentStyle } from "@/core/color";
 import { type ServiceKey, checkTexts, declarations, healthQuestions, infoDocument, isServiceKey, legalLocaleFor, serviceLabel } from "@/core/content";
 import { LocaleSwitch } from "@/components/locale-switch";
 import { SelloCasa } from "@/components/marca";
+import { isDemoStudio } from "@/server/demo";
 import { getStudio, listArtists, studioIdBySlug } from "@/server/studios";
 import { withStudio } from "@/server/tenant";
 import { ConsentForm, type FormConfig } from "./consent-form";
@@ -35,6 +36,7 @@ export default async function PublicFormPage({ params }: PageProps<"/s/[slug]">)
     healthQuestions: healthQuestions(legalLocale),
     checkTexts: checkTexts(legalLocale),
     legalInOtherLanguage: legalLocale !== locale,
+    demo: isDemoStudio(studio.slug),
   };
 
   return (

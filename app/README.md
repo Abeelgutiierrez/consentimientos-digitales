@@ -60,6 +60,21 @@ Se leen de `.env.local` (no se sube a Git). `.env.example` está comentado líne
 | `npm run check` | Tipos + lint + tests de lógica y base de datos (Vitest). |
 | `npm run test:e2e` | Compila y ejecuta el flujo completo en vista móvil (Playwright). La primera vez: `npx playwright install chromium`. |
 
+## Demo en directo (visita comercial)
+
+Pensada para enseñarlo en un estudio en 3–4 minutos, con el móvil del propio comerciante.
+
+1. Abre **`/demo`** en el portátil. Muestra el QR del formulario (con la IP de la wifi del portátil) y el guion.
+2. Pulsa **«Abrir el panel del estudio»**: entra en el panel de la demo con un clic (acceso normal con la
+   contraseña pública `demo1234`). El panel muestra «En directo» y se actualiza solo.
+3. El comerciante escanea el QR, pulsa **«Rellenar con datos de ejemplo»**, avanza los pasos y firma con el dedo.
+4. En el portátil salta el aviso «Nuevo consentimiento firmado» y la fila aparece en la lista.
+   En el móvil, la pantalla final ofrece **«Verlo en el panel del estudio»**, que abre ese consentimiento.
+
+El modo demo está activo fuera de producción, en los tests E2E o con `DEMO_MODE=1`. **No pongas `DEMO_MODE`
+en un despliegue con clientes reales.** El móvil y el portátil tienen que estar en la misma wifi y Windows
+tiene que permitir Node en la red privada. Si la demo está publicada, define `PUBLIC_URL` para el QR.
+
 ## Qué hay dentro
 
 ```

@@ -4,6 +4,7 @@ import { getTranslations } from "next-intl/server";
 import { serviceLabel } from "@/core/content";
 import { LocaleSwitch } from "@/components/locale-switch";
 import { Monograma, Producto } from "@/components/marca";
+import { demoEnabled } from "@/server/demo";
 import { getStudio } from "@/server/studios";
 import { withStudio, withoutStudio } from "@/server/tenant";
 
@@ -17,6 +18,8 @@ async function demoStudios() {
 
 export default async function Home() {
   const t = await getTranslations("home");
+  const td = await getTranslations("demo");
+  const demo = demoEnabled();
   const studios = await demoStudios();
   return (
     <div className="home">
@@ -35,7 +38,14 @@ export default async function Home() {
             <h1>{t("title")}</h1>
             <p className="lead">{t("lead")}</p>
             <div className="cta">
-              <Link className="btn lg" href="/login">{t("panel")}</Link>
+              {demo ? (
+                <>
+                  <Link className="btn lg" href="/demo">{td("homeCta")}</Link>
+                  <Link className="btn lg ghost" href="/login">{t("panel")}</Link>
+                </>
+              ) : (
+                <Link className="btn lg" href="/login">{t("panel")}</Link>
+              )}
             </div>
           </div>
           {/* El gesto del producto: una firma que se dibuja sobre su línea. */}

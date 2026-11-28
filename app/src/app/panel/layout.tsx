@@ -4,7 +4,10 @@ import { inkFor, safeColor } from "@/core/color";
 import { LocaleSwitch } from "@/components/locale-switch";
 import { Producto, SelloCasa } from "@/components/marca";
 import { requireUser, withUser } from "@/server/auth";
+import { listConsents } from "@/server/consents";
+import { demoEnabled } from "@/server/demo";
 import { getStudio } from "@/server/studios";
+import { DemoLive } from "./demo-live";
 import { logoutAction } from "./actions";
 import { type NavItem, PanelNav } from "./nav";
 
@@ -13,6 +16,13 @@ import { type NavItem, PanelNav } from "./nav";
 export default async function PanelLayout({ children }: LayoutProps<"/panel">) {
   const user = await requireUser();
   const studio = await withUser((scope) => getStudio(scope));
+  // Modo demo: último consentimiento, para avisar en directo cuando entra uno nuevo.
+  const latest = demoEnabled()
+    ? await withUser(async (scope) => {
+        const [c] = await listConsents(scope, { limit: 1 });
+        return c ? { id: c.id, name: c.clientName } : null;
+      })
+    : undefined;
   const t = await getTranslations("nav");
   const items: NavItem[] = [
     { href: "/panel", label: t("dashboard"), icon: "home" },
@@ -61,7 +71,10 @@ export default async function PanelLayout({ children }: LayoutProps<"/panel">) {
           <SelloCasa />
         </div>
       </aside>
-      <main className="main">{children}</main>
+      <main className="main">
+        {latest !== undefined && <DemoLive latest={latest} />}
+        {children}
+      </main>
     </div>
   );
 }

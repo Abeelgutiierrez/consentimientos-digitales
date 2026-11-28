@@ -7,6 +7,7 @@ import { accentStyle } from "@/core/color";
 import { fmtDate, fmtDateTime } from "@/core/dates";
 import { Icons } from "@/components/icons";
 import { SelloCasa } from "@/components/marca";
+import { demoPanelHref, isDemoStudio } from "@/server/demo";
 import { publicSummary, resolvePublicLink } from "@/server/consents";
 import { getStudio } from "@/server/studios";
 import { withStudio } from "@/server/tenant";
@@ -25,6 +26,8 @@ export default async function ThanksPage({ params, searchParams }: PageProps<"/s
   if (studio.slug !== slug) notFound();
   const t = await getTranslations("thanks");
   const tf = await getTranslations("form");
+  const td = await getTranslations("demo");
+  const demo = isDemoStudio(studio.slug);
   return (
     <div className="public" style={accentStyle(studio.color) as CSSProperties}>
       <div className="pub-head">
@@ -43,6 +46,14 @@ export default async function ThanksPage({ params, searchParams }: PageProps<"/s
           <p style={{ marginTop: 16 }} className="muted">{t("returnDevice")}</p>
           <Link className="btn ghost block" href={`/s/${studio.slug}`}>{t("another")}</Link>
         </div>
+        {demo && (
+          <div className="demo-next" data-testid="demo-next">
+            <span className="demo-badge">{td("badge")}</span>
+            <h2>{td("thanksTitle")}</h2>
+            <p>{td("thanksText")}</p>
+            <a className="btn block lg" href={demoPanelHref(studio.slug, `/panel/consentimientos/${id}`)}>{td("thanksCta")}</a>
+          </div>
+        )}
         <div className="legal-foot"><SelloCasa /></div>
       </div>
     </div>

@@ -534,5 +534,31 @@
       "user": "Usuarios y accesos"
     },
     "deleted": "eliminado"
+  },
+  "demo": {
+    "badge": "Modo demo",
+    "fillExample": "Rellenar con datos de ejemplo",
+    "thanksTitle": "Ahora, el estudio",
+    "thanksText": "Así lo recibe el estudio: el consentimiento con su PDF firmado y la ficha del cliente ya creada.",
+    "thanksCta": "Verlo en el panel del estudio",
+    "liveNew": "Nuevo consentimiento firmado: {name}",
+    "liveOpen": "Abrirlo",
+    "liveOn": "En directo",
+    "pageTitle": "Demo en directo",
+    "pageLead": "Enséñalo como lo vivirá el estudio: firma desde su propio móvil y lo ve llegar al panel en este ordenador.",
+    "chooseStudio": "Estudio de la demo",
+    "step1Title": "El cliente firma en su móvil",
+    "step1Text": "Que escanee el QR y rellene el formulario. Con «Rellenar con datos de ejemplo» se hace en un minuto.",
+    "openHere": "Abrir el formulario aquí",
+    "lanNote": "El móvil tiene que estar en la misma Wi-Fi que este ordenador.",
+    "step2Title": "El estudio lo recibe al momento",
+    "step2Text": "Abre el panel en este ordenador antes de firmar: el consentimiento aparece solo, con su PDF.",
+    "openPanel": "Abrir el panel del estudio",
+    "step3Title": "Lo que más le interese",
+    "step3a": "La ficha del cliente con todo su historial",
+    "step3b": "El PDF firmado y la comprobación de que nadie lo ha tocado",
+    "step3c": "El QR del mostrador, listo para imprimir",
+    "step3d": "La felicitación de cumpleaños, solo para quien aceptó promociones",
+    "homeCta": "Demo en directo"
   }
 }

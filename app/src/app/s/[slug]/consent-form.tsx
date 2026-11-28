@@ -14,11 +14,21 @@ export interface FormConfig {
   healthQuestions: { key: string; label: string }[];
   checkTexts: { privacy: string; marketing: string; images: string };
   legalInOtherLanguage: boolean;
+  /** Modo demo: muestra «Rellenar con datos de ejemplo» para enseñarlo en directo. */
+  demo?: boolean;
 }
 
 type Errors = Record<string, string>;
 const TOTAL = 5;
 const RELATIONS = [["madre", "Madre"], ["padre", "Padre"], ["tutor", "Tutor/a legal"]] as const;
+
+// Personas ficticias para el modo demo (una distinta cada vez, para que el panel no repita nombre).
+const EXAMPLES = [
+  { firstName: "Laia", lastName: "Puig Ferrer", dni: "12345678Z", birthDate: "1996-04-12", phone: "600 123 456", zone: "Antebrazo derecho", description: "Rama de olivo fine line, 10 cm" },
+  { firstName: "Pol", lastName: "Serra Vidal", dni: "23456789D", birthDate: "1991-09-03", phone: "611 234 567", zone: "Gemelo izquierdo", description: "Ola japonesa en negro, 15 cm" },
+  { firstName: "Carla", lastName: "Riba Soler", dni: "34567890V", birthDate: "1999-01-27", phone: "622 345 678", zone: "Clavícula", description: "Frase en lettering fino" },
+  { firstName: "Nil", lastName: "Font Roca", dni: "45678901G", birthDate: "1988-06-19", phone: "633 456 789", zone: "Hombro derecho", description: "Brújula de línea fina" },
+] as const;
 
 function stepOf(field: string): number {
   if (/^(firstName|lastName|dni|birthDate|phone|email|address|minor\.)/.test(field)) return 0;
@@ -42,6 +52,7 @@ function ageFrom(birthDate: string): number | null {
 export function ConsentForm({ config }: { config: FormConfig }) {
   const t = useTranslations("form");
   const tv = useTranslations("validation");
+  const td = useTranslations("demo");
   const [step, setStep] = useState(0);
   const [errors, setErrors] = useState<Errors>({});
   const [submitError, setSubmitError] = useState<string | null>(null);
@@ -113,6 +124,26 @@ export function ConsentForm({ config }: { config: FormConfig }) {
       if (isMinor && tutorPad.current?.isEmpty()) e.tutorSignature = "signature.missing";
     }
     return e;
+  }
+
+  // Modo demo: deja el formulario listo para avanzar paso a paso (la firma la hace la persona).
+  // Las casillas opcionales (promociones, imágenes) se quedan sin marcar, como siempre.
+  function fillExample() {
+    const ex = EXAMPLES[Math.floor(Math.random() * EXAMPLES.length)]!;
+    const slugMail = ex.firstName.toLowerCase().normalize("NFD").replace(/[^a-z]/g, "");
+    setV((prev) => ({
+      ...prev,
+      ...ex,
+      email: `${slugMail}.demo@example.com`,
+      address: "",
+      service: config.services[0]?.key ?? prev.service,
+      artistId: config.artists[0]?.id ?? prev.artistId,
+      healthNotes: "",
+      read: true,
+      privacy: true,
+    }));
+    setHealth(Object.fromEntries(config.healthQuestions.map((q) => [q.key, "no" as const])));
+    setErrors({});
   }
 
   function show(i: number) {
@@ -208,6 +239,12 @@ export function ConsentForm({ config }: { config: FormConfig }) {
       </div>
 
       <section className={`step${step === 0 ? "" : " hidden"}`} aria-hidden={step !== 0}>
+        {config.demo && (
+          <div className="demo-fill">
+            <span className="demo-badge">{td("badge")}</span>
+            <button type="button" className="btn small ghost" onClick={fillExample}>{td("fillExample")}</button>
+          </div>
+        )}
         <div className="step-kicker">{t("stepOf", { n: 1, total: TOTAL })}</div>
         <h2>{t("s1Title")}</h2>
         <p className="lead">{t("s1Lead")}</p>
